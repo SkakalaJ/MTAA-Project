@@ -1,0 +1,15 @@
+# Ignore macOS files
+.DS_Store
+
+# Ignoring locally installed modules
+node_modules/
+
+# Ignoring compiled files
+dist/
+build/
+
+# Ignoring development environment files
+#.env
+token
+google-credentials.json
+

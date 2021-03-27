@@ -1,0 +1,24 @@
+# Ignore macOS files
+.DS_Store
+
+# Ignoring git file
+.git/
+.gitattributes
+.gitignore
+.gitlab-ci.yml
+
+# Ignoring docker-compose files
+docker-compose.yml
+docker-compose.env
+docker-compose.test.yml
+docker-compose.test.env
+
+# Ignoring locally installed modules
+node_modules/
+
+# Ignoring compiled files
+dist/
+
+# Ignoring development environment files
+.env
+.env.example

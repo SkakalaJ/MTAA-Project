@@ -1,0 +1,54 @@
+version: "2"
+
+volumes:
+  postgres:
+
+networks:
+  local-network:
+    driver: bridge
+  external-network:
+    external:
+      name: external-network
+
+services:
+  api:
+    build: .
+    container_name: messenger-api
+    restart: always
+    depends_on:
+      - postgres
+    env_file:
+      - ./docker-compose.env
+    environment: 
+      - RUN_TYPE=api
+      - VIRTUAL_HOST=api.app.messenger
+      - LETSENCRYPT_HOST=api.app.messenger
+      - LETSENCRYPT_EMAIL=xskakala@stuba.sk
+    networks:
+      - local-network
+      - external-network
+    expose:
+      - "4000"
+
+  postgres:
+    image: postgres:11
+    container_name: messenger-postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=efV3Xc8tAu5fHfBXCG19
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - local-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: messenger-pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.sk
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - "5050:80"
+    networks:
+      - local-network
