@@ -2,6 +2,7 @@
 Before running docker-compose file run command in docker:
 ```
 docker network create external-network
+```
 
 ### Migrations
 For generating new empty TS migration file use:
