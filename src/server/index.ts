@@ -6,6 +6,11 @@ export function prepareServer(): http.Server {
     const app = express();
     const server = http.createServer(app);
 
+    app.all('/', function (req, res){
+        console.log(req.body);
+        res.send("Hello World from Server");
+    });
+
     return server;
 }
 

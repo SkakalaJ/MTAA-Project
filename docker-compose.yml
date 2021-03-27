@@ -27,8 +27,8 @@ services:
     networks:
       - local-network
       - external-network
-    expose:
-      - "4000"
+    ports:
+      - "4000:4000"
 
   postgres:
     image: postgres:11
