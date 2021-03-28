@@ -1,5 +1,6 @@
 import { Table, Column, Model, DataType } from "sequelize-typescript";
 import { IUser } from "../types/entities";
+import sequelize from "sequelize";
 
 
 @Table({ tableName: "users", modelName: 'user', timestamps: true, paranoid: true })
@@ -7,6 +8,9 @@ export class User extends Model<User> implements IUser {
     
     @Column({ type: DataType.INTEGER, allowNull: false, primaryKey: true, autoIncrement: true })
     id: number;
+
+    @Column({ type: DataType.TEXT, allowNull: false, defaultValue: sequelize.literal(`'USR' || LPAD(nextval('users_bid_seq'::regclass)::TEXT, 8, '0')`) })
+    bid: string;
 
     @Column({ type: DataType.STRING(512), allowNull: false })
     password: string;

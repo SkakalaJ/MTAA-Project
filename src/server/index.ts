@@ -1,15 +1,13 @@
 import express = require("express");
 import http from "http";
 import { API_PORT, API_URL } from "./config";
+import { attachPages } from "./api/";
 
 export function prepareServer(): http.Server {
     const app = express();
     const server = http.createServer(app);
 
-    app.all('/', function (req, res){
-        console.log(req.body);
-        res.send("Hello World from Server");
-    });
+    attachPages(app);
 
     return server;
 }
