@@ -1,6 +1,7 @@
 import { Router, Application, Request, Response } from 'express';
 import * as bodyParser from 'body-parser';
 import { router as userRouter } from "./user";
+import { router as roomRouter } from "./room";
 
 export function attachRouters(app: Application): Application {
     const router = Router();
@@ -8,7 +9,8 @@ export function attachRouters(app: Application): Application {
     router.use('*', bodyParser.urlencoded({ limit: '5mb', extended: true }));
     router.use('*', bodyParser.json({ limit: '5mb' }));
     router.use('*', bodyParser.raw({ limit: '5mb '}));
-    router.use('/api/user/', userRouter);
+    router.use('/api/users/', userRouter);
+    router.use('/api/rooms/', roomRouter);
 
     // Home URL
     router.route('/').all(function (req: Request, res: Response) {
