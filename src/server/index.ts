@@ -18,3 +18,14 @@ export function startServer() {
         console.log('Server listening on:', API_URL);
     });
 }
+
+// Vypocet hashu ... zmizne odtialto coskoro
+// const saltRounds = 10;
+
+// bcrypt.hash("JS_FIIT", saltRounds, function(err, hash) {
+//     console.log("JS_FIIT : " + hash);
+// });
+
+// bcrypt.hash("JD_FIIT", saltRounds, function(err, hash) {
+//     console.log("JD_FIIT : " + hash);
+// });

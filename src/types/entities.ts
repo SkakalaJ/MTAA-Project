@@ -130,7 +130,6 @@ export interface ISession {
     geolocation: boolean;
     longitude: number | null;
     latitude: number | null;
-    sessionId: string;
     token: string;
     createdAt: Date;
     expiresAt: Date | null;

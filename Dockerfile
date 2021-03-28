@@ -11,7 +11,7 @@ COPY ./*tsconfig.json ./
 COPY ./src ./src
 
 RUN npm run build
-RUN npm run migrations:compile
+RUN npm run migrations:compile && npm run seeds:compile
 RUN npm prune --production
 
 FROM node:12-slim

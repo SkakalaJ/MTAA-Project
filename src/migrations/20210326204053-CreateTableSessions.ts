@@ -25,12 +25,8 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 type: Sequelize.DECIMAL(8,6),
                 allowNull: true
             },
-            sessionId: {
-                type: Sequelize.TEXT,
-                allowNull: false
-            },
             token: {
-                type: Sequelize.TEXT,
+                type: Sequelize.UUID,
                 allowNull: false
             },
             createdAt: {

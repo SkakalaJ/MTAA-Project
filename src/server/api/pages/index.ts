@@ -8,16 +8,16 @@ export function attachRouters(app: Application): Application {
     router.use('*', bodyParser.urlencoded({ limit: '5mb', extended: true }));
     router.use('*', bodyParser.json({ limit: '5mb' }));
     router.use('*', bodyParser.raw({ limit: '5mb '}));
-    router.use('/user/', userRouter);
+    router.use('/api/user/', userRouter);
 
     // Home URL
-    router.route('*').all(function (req: Request, res: Response) {
-        res.status(404).send({ error: false, message: 'Hello from Home page'});
+    router.route('/').all(function (req: Request, res: Response) {
+        res.status(200).send({ error: false, message: 'Hello from Home page'});
     });
 
     // Mismatch URL
     router.route('*').all(function (req: Request, res: Response) {
-        res.status(404).send({ error: true, message: 'Check your URL please'});
+        res.status(404).send({ error: true, message: '404 page not found'});
     });
 
     app.use(router);

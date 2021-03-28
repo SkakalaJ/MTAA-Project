@@ -33,10 +33,7 @@ export class Session extends Model<Session> implements ISession {
     @Column({ type: DataType.DECIMAL(8,6), allowNull: true })
     latitude: number | null;
 
-    @Column({ type: DataType.TEXT, allowNull: false })
-    sessionId: string;
-
-    @Column({ type: DataType.TEXT, allowNull: false })
+    @Column({ type: DataType.UUID, allowNull: false })
     token: string;
 
     @Column({ type: DataType.TEXT, allowNull: false })
