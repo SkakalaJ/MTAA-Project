@@ -10,7 +10,7 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 id: 1,
                 name: "Chatroom",
                 createdAt: new Date(),
-                updatedAt: null,
+                updatedAt: new Date(),
                 deletedAt: null,
                 avatar: null,
             }
@@ -23,6 +23,8 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 id: 1,
                 createdBy: true,
                 lastSeen: new Date(),
+                createdAt: new Date(),
+                updatedAt: new Date(),
                 userId: 1,
                 roomId: 1,
             }
@@ -35,6 +37,8 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 id: 2,
                 createdBy: false,
                 lastSeen: new Date(),
+                createdAt: new Date(),
+                updatedAt: new Date(),
                 userId: 2,
                 roomId: 1,
             }
