@@ -17,7 +17,7 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 verifiedAt: new Date(),
                 phone: null,
                 createdAt: new Date(),
-                updatedAt: null,
+                updatedAt: new Date(),
                 deletedAt: null,
                 avatar: null,
             }
@@ -38,7 +38,7 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 verifiedAt: new Date(),
                 phone: null,
                 createdAt: new Date(),
-                updatedAt: null,
+                updatedAt: new Date(),
                 deletedAt: null,
                 avatar: null,
             }
@@ -46,8 +46,6 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
       
           await queryInterface.sequelize.query(`SELECT setval('users_id_seq', (SELECT MAX(id) FROM "users"))`, { transaction });
           await queryInterface.sequelize.query(`SELECT setval('users_bid_seq', currval('users_id_seq'))`, { transaction });
-      
-
     });
 }
 

@@ -36,4 +36,10 @@ export class Device extends Model<Device> implements IDevice {
 
     @Column({ type: DataType.DATE, allowNull: false })
     createdAt: Date;
+
+    @Column({ type: DataType.DATE, allowNull: true })
+    updatedAt: Date | null;
+
+    @Column({ type: DataType.DATE, allowNull: true })
+    deletedAt: Date | null;
 }

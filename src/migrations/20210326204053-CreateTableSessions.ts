@@ -7,10 +7,10 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
         
         await queryInterface.createTable('sessions', {
             id: {
-              type: Sequelize.INTEGER,
-              allowNull: false,
-              primaryKey: true,
-              autoIncrement: true
+                type: Sequelize.INTEGER,
+                allowNull: false,
+                primaryKey: true,
+                autoIncrement: true
             },
             geolocation: {
                 type: Sequelize.BOOLEAN,
@@ -34,9 +34,15 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 allowNull: false,
                 defaultValue: Sequelize.NOW
             },
+            updatedAt: {
+                type: Sequelize.DATE,
+                allowNull: true,
+                defaultValue: null
+            },
             expiresAt: {
-              type: Sequelize.DATE,
-              allowNull: true
+                type: Sequelize.DATE,
+                allowNull: true,
+                defaultValue: null
             },
             locked: {
                 type: Sequelize.BOOLEAN,
@@ -44,9 +50,15 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 defaultValue: false
             },
             lockedAt: {
-              type: Sequelize.DATE,
-              allowNull: true
-            }
+                type: Sequelize.DATE,
+                allowNull: true,
+                defaultValue: null
+            },
+            deletedAt: {
+                type: Sequelize.DATE,
+                allowNull: true,
+                defaultValue: null
+            },
             
         }, { transaction });
 

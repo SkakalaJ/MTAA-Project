@@ -48,11 +48,21 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 type: Sequelize.STRING(8),
                 allowNull: true
             },
+            updatedAt: {
+                type: Sequelize.DATE,
+                allowNull: true,
+                defaultValue: null
+            },
             createdAt: {
                 type: Sequelize.DATE,
                 allowNull: false,
                 defaultValue: Sequelize.NOW
-            }
+            },
+            deletedAt: {
+                type: Sequelize.DATE,
+                allowNull: true,
+                defaultValue: null
+            },
             
         }, { transaction });
 

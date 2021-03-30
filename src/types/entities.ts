@@ -47,6 +47,7 @@ export enum EDeviceType {
 
 export interface IUser {
     id: number;
+    bid: string;
     password: string;
     username: string;
     email: string;
@@ -55,10 +56,10 @@ export interface IUser {
     verified: boolean;
     verifiedAt: Date;
     phone: string | null;
+    avatar: string | null;
     createdAt: Date;
     updatedAt: Date | null;
     deletedAt: Date | null;
-    avatar: string | null;
 }
 
 export interface IMessage {
@@ -67,19 +68,20 @@ export interface IMessage {
     userId: number;
     room: IRoom;
     roomId: number;
-    createdAt: Date;
-    deletedAt: Date | null;
     content: string;
     medium: boolean;
+    createdAt: Date;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
 }
 
 export interface IRoom {
     id: number;
     name: string;
+    avatar: string | null;
     createdAt: Date;
     updatedAt: Date | null;
     deletedAt: Date | null;
-    avatar: string | null;
 }
 
 export interface IRoomUser {
@@ -90,6 +92,9 @@ export interface IRoomUser {
     roomId: number;
     createdBy: boolean;
     lastSeen: Date;
+    createdAt: Date;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
 }
 
 export interface IMedia {
@@ -110,6 +115,9 @@ export interface IMessageMedia {
     messageId: number;
     media: IMedia;
     mediaId: number;
+    createdAt: Date;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
 }
 
 export interface IBlockList {
@@ -119,6 +127,7 @@ export interface IBlockList {
     blockedUsersIds: number[];
     createdAt: Date;
     updatedAt: Date | null;
+    deletedAt: Date | null;
 }
 
 export interface ISession {
@@ -131,10 +140,12 @@ export interface ISession {
     longitude: number | null;
     latitude: number | null;
     token: string;
-    createdAt: Date;
     expiresAt: Date | null;
     locked: boolean;
     lockedAt: Date | null;
+    createdAt: Date;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
 }
 
 export interface IDevice {
@@ -149,4 +160,6 @@ export interface IDevice {
     screenHeight: string | null;
     colorDepth: string | null;
     createdAt: Date;
+    updatedAt: Date | null;
+    deletedAt: Date | null;
 }

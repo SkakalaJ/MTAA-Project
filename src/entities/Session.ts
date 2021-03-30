@@ -36,8 +36,14 @@ export class Session extends Model<Session> implements ISession {
     @Column({ type: DataType.UUID, allowNull: false })
     token: string;
 
-    @Column({ type: DataType.TEXT, allowNull: false })
+    @Column({ type: DataType.DATE, allowNull: false })
     createdAt: Date;
+
+    @Column({ type: DataType.DATE, allowNull: true })
+    updatedAt: Date | null;
+
+    @Column({ type: DataType.DATE, allowNull: true })
+    deletedAt: Date | null;
 
     @Column({ type: DataType.DATE, allowNull: true })
     expiresAt: Date | null;

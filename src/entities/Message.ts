@@ -34,4 +34,7 @@ export class Message extends Model<Message> implements IMessage {
 
     @Column({ type: DataType.BOOLEAN, allowNull: false })
     medium: boolean;
+
+    @Column({ type: DataType.DATE, allowNull: true })
+    updatedAt: Date | null;
 }

@@ -23,4 +23,7 @@ export class BlockList extends Model<BlockList> implements IBlockList {
 
     @Column({ type: DataType.DATE, allowNull: true })
     updatedAt: Date | null;
+
+    @Column({ type: DataType.DATE, allowNull: true })
+    deletedAt: Date | null;
 }

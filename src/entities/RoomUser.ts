@@ -27,5 +27,14 @@ export class RoomUser extends Model<RoomUser> implements IRoomUser {
     createdBy: boolean;
 
     @Column({ type: DataType.DATE, allowNull: false })
+    createdAt: Date;
+
+    @Column({ type: DataType.DATE, allowNull: true })
+    updatedAt: Date | null;
+
+    @Column({ type: DataType.DATE, allowNull: true })
+    deletedAt: Date | null;
+
+    @Column({ type: DataType.DATE, allowNull: false })
     lastSeen: Date;
 }

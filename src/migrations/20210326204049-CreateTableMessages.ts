@@ -17,9 +17,15 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 allowNull: false,
                 defaultValue: Sequelize.NOW
             },
+            updatedAt: {
+                type: Sequelize.DATE,
+                allowNull: true,
+                defaultValue: null
+            },
             deletedAt: {
                 type: Sequelize.DATE,
-                allowNull: true
+                allowNull: true,
+                defaultValue: null
             },
             content: {
                 type: Sequelize.TEXT,
