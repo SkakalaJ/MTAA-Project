@@ -19,6 +19,7 @@ node_modules/
 # Ignoring compiled files
 dist/
 build/
+docs/
 
 # Ignoring development environment files
 .env

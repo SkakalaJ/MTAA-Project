@@ -25,3 +25,7 @@ If you need to revert applied migration for some reason, use command:
 ```
 npm run migrations:revert
 ```
+
+### Database Model
+
+![ScreenShot](./docs/DB_Model_Messenger.PNG)
