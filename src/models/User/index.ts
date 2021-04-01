@@ -116,11 +116,11 @@ export async function getByLogin(login: string): Promise<User | null> {
 
 export async function getById(userId: number): Promise<User | null> {
     return await User.findOne({ 
-        where: { id: userId },
-        include: [{
-            model: Room,
-            as: 'rooms'
-        }],
+        where: { 
+            id: userId,
+            deletedAt: null
+        },
+        attributes: ['bid', 'username', 'verified','avatar', 'createdAt']
     });
 }
 
@@ -141,8 +141,20 @@ export async function updatePasswordForUser(newPassword: string, userId: number)
         },
         {
             where: { 
-                id: userId
+                id: userId,
+                deletedAt: null
             }
         }
     );
+}
+
+export async function getByIdWithRoomId(userId: number, roomId: number): Promise<User | null> {
+    return await User.findOne({ 
+        where: { id: userId, deletedAt: null },
+        include: [{
+            model: Room,
+            as: 'rooms',
+            where: { id: roomId }
+        }],
+    });
 }

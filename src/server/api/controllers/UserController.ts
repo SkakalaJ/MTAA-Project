@@ -1,7 +1,7 @@
 import * as EmailValidator from 'email-validator';
 import { Request, Response, NextFunction, response } from 'express';
-import { TUser, TLoginRequest, TLoginResponse, TLoginResponseData, TRegisterRequest, TRegisterResponse, TRegisterResponseData, TLogoutRequest, TLogoutResponse, TUpdatePasswdResponse, TUpdatePasswdRequest } from '../types';
-import { ELoginError, ELogoutError, ERegisterError, EPasswdUpdateError } from '../types/errors';
+import { TAnyResponse, TUser, TLoginRequest, TLoginResponse, TLoginResponseData, TRegisterRequest, TRegisterResponse, TRegisterResponseData, TLogoutRequest, TLogoutResponse, TUpdatePasswdResponse, TUpdatePasswdRequest } from '../types';
+import { EMessageError, ELoginError, ELogoutError, ERegisterError, EPasswdUpdateError } from '../types/errors';
 import * as UserModel from '../../../models/User';
 import * as SessionModel from '../../../models/Session';
 import { checkAuthorizationHeader as checkAuthHeader } from './AuthorizationController';
@@ -44,6 +44,57 @@ export async function verifyLogin(req: Request, res: Response, next: NextFunctio
 
     responseObj.data = data;
     return res.status(307).send(responseObj);
+}
+
+export async function getUser(req: Request, res: Response, next: NextFunction): Promise<any>{
+    const userId = req.params.userId;
+
+    let responseObj: TAnyResponse = {
+        data: null,
+        error: null,
+    };
+
+    if(req.params.userId == null){
+        responseObj.error = EMessageError.Request;
+        return res.status(400).send(responseObj);
+    }
+
+    let token;
+    try{
+        token = await checkAuthHeader(req);
+    }catch(err){
+        responseObj.error = err.message;
+        return res.status(401).send(responseObj);
+    }
+
+    let session:Session | null;
+    try{
+        session = await SessionModel.getByToken(token);
+        if(!session)
+            throw new Error(EMessageError.Permission);
+
+    }catch(err){
+        responseObj.error = err.message;
+        return res.status(401).send(responseObj);
+    }
+
+    const user = await UserModel.getById(Number(userId));
+
+    if(!user){
+        responseObj.data = "User doesn't exist.";
+        return res.status(200).send(responseObj);
+    }
+
+    let data: any = {
+        bid: user.bid,
+        createdAt: user.createdAt,
+        username: user.username,
+        verified: user.verified,
+        avatar: user.avatar
+    }
+
+    responseObj.data = data;
+    return res.status(200).send(responseObj);
 }
 
 export async function registerUser(req: Request, res: Response, next: NextFunction): Promise<any>{

@@ -32,6 +32,10 @@ export async function up(queryInterface: QueryInterface, Sequelize: any): Promis
                 type: Sequelize.TEXT,
                 allowNull: false
             },
+            url: {
+                type: Sequelize.TEXT,
+                allowNull: false
+            },
             createdAt: {
                 type: Sequelize.DATE,
                 allowNull: false,

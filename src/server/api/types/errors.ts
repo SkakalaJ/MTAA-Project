@@ -36,3 +36,10 @@ export enum EPasswdUpdateError {
     WeakPasswd = "Weak password. Password must contain at least one uppercase letter, lowercase letter and number",
     Request = "Request parameters invalid!",
 }
+
+export enum EMessageError {
+    Empty = "Message is empty!",
+    Request = "Request parameters invalid!",
+    Permission = "Unauthorized operation!",
+    ServerError = "Operation unsuccessful!",
+}

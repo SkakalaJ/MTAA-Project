@@ -7,7 +7,7 @@ export type TRoomCreateInput = Pick<IRoom, 'name' | 'avatar' >;
 
 export async function getById(roomId: number): Promise<Room | null> {
     return await Room.findOne({ 
-        where: { id: roomId },
+        where: { id: roomId, deletedAt: null },
         include: [{
             model: User,
             as: 'users'
@@ -16,7 +16,8 @@ export async function getById(roomId: number): Promise<Room | null> {
 }
 
 export async function getAll(): Promise<Room[]> {
-    return await Room.findAll({ 
+    return await Room.findAll({
+        where: {deletedAt: null},
         include: [{
             model: User,
             as: 'users'

@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { TLoginRequest, TLoginResponse } from '../../types';
 import * as room from "../../controllers/RoomController";
+import * as message from "../../controllers/MessageController";
 
-export const router = Router();
+export const router = Router({ mergeParams: true });
 
 router.route('/').get(function (req: Request, res: Response){
     res.send('all');
@@ -17,3 +17,9 @@ router.route('/').post(room.createRoom);
 router.route('/:roomId').put(room.createRoom);
 
 router.route('/:roomId').delete(room.deleteRoom);
+// router.route('/all').get(room.getRoomsWithUsersAndMessages);
+
+
+router.route('/:roomId/messages').post(message.processMessage);
+router.route('/:roomId/messages').get(message.getMessages);
+router.route('/:roomId/messages/:messageId').delete(message.deleteMessage);

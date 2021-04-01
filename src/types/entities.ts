@@ -7,19 +7,19 @@ export enum EMediaFormatPicture {
 }
 
 export enum EMediaFormatVideo { 
-    WEBM = '.webm',
-    MPG = '.mpg',
-    MP2 = '.mp2',
-    MPEG = '.mpeg',
-    MPE = '.mpe',
-    MPV = '.mpv',
-    OGG = '.ogg',
-    MP4 = '.mp4',
-    M4P = '.m4p',
-    M4V = '.m4v',
-    AVI = '.avi',
-    WMV = '.wmv',
-    MOV = '.mov',
+    WEBM = ".webm",
+    MPG = ".mpg",
+    MP2 = ".mp2",
+    MPEG = ".mpeg",
+    MPE = ".mpe",
+    MPV = ".mpv",
+    OGG = ".ogg",
+    MP4 = ".mp4",
+    M4P = ".m4p",
+    M4V = ".m4v",
+    AVI = ".avi",
+    WMV = ".wmv",
+    MOV = ".mov",
 }
 
 export enum EMediaFormatAudio {
@@ -104,6 +104,7 @@ export interface IMedia {
     format: EMediaFormatVideo | EMediaFormatPicture | EMediaFormatAudio;
     type: EMediaType;
     path: string;
+    url: string;
     createdAt: Date;
     updatedAt: Date | null;
     deletedAt: Date | null;

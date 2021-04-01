@@ -1,7 +1,9 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo} from "sequelize-typescript";
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany} from "sequelize-typescript";
 import { IMessage } from "../types/entities";
 import { User } from './User';
 import { Room } from './Room';
+import { Media } from './Media';
+import { MessageMedia } from './MessageMedia';
 
 @Table({ tableName: "messages", modelName: 'message', timestamps: true, paranoid: true })
 export class Message extends Model<Message> implements IMessage {
@@ -37,4 +39,7 @@ export class Message extends Model<Message> implements IMessage {
 
     @Column({ type: DataType.DATE, allowNull: true })
     updatedAt: Date | null;
+
+    @BelongsToMany(() => Media, () => MessageMedia)
+    medias: Media[];
 }

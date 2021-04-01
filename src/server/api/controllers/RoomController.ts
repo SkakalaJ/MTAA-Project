@@ -22,7 +22,7 @@ export async function createRoom(req: Request, res: Response){
 }
 
 export async function updateRoom(req: Request, res: Response){
-
+    
     const body: TRoom = req.body;
 
     let room;

@@ -61,7 +61,8 @@ export async function getByToken(token: string): Promise<Session | null> {
                     [Op.is]: null
                 }
             },
-            locked: false
+            locked: false,
+            deletedAt: null
         },
         include: [{ 
             model: User, 

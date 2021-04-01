@@ -9,9 +9,6 @@ export class Media extends Model<Media> implements IMedia {
     @Column({ type: DataType.BIGINT, allowNull: false, primaryKey: true, autoIncrement: true })
     id: number;
 
-    @Column({ type: DataType.TEXT, allowNull: false, defaultValue: sequelize.literal(`'USR' || LPAD(nextval('users_bid_seq'::regclass)::TEXT, 8, '0')`) })
-    bid: string;
-
     @Column({ type: DataType.STRING(45), allowNull: false })
     name: string;
 
@@ -26,6 +23,9 @@ export class Media extends Model<Media> implements IMedia {
 
     @Column({ type: DataType.TEXT, allowNull: false })
     path: string;
+
+    @Column({ type: DataType.TEXT, allowNull: false })
+    url: string;
 
     @Column({ type: DataType.DATE, allowNull: false })
     createdAt: Date;
