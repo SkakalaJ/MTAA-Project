@@ -3,7 +3,7 @@ import { Request, Response, NextFunction, response } from 'express';
 import { TUser, TLoginRequest, TLoginResponse, TLoginResponseData, TRegisterRequest, TRegisterResponse, TRegisterResponseData, TLogoutRequest, TLogoutResponse, TUpdatePasswdResponse, TUpdatePasswdRequest } from '../types';
 import { ELoginError, ELogoutError, ERegisterError, EPasswdUpdateError } from '../types/errors';
 import * as UserModel from '../../../models/User';
-import * as SessionModel from '/../Session';
+import * as SessionModel from '../../../models/Session';
 import { checkAuthorizationHeader as checkAuthHeader } from './AuthorizationController';
 import { EDeviceType } from '../../../types/entities';
 import { Session } from '../../../entities/Session';
