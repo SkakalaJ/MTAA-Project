@@ -1,8 +1,9 @@
 import { ELoginError, ERegisterError, ELogoutError, EAccessError, EPasswdUpdateError } from './errors';
-import { EDeviceType } from '../../../types/entities';
+import { EDeviceType, IRoom } from '../../../types/entities';
 import { IUser } from '../../../types/entities';
 
 export type TUser = Pick<IUser, 'bid' | 'username' | 'email' | 'phone' | 'avatar' | 'verified'>;
+export type TRoom = Pick<IRoom, 'id' | 'name' | 'avatar' >;
 
 export type TDevice = {
     type: EDeviceType,

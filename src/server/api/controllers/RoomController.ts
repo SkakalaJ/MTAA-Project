@@ -4,41 +4,25 @@ import { ELoginError } from '../types/errors';
 
 import * as Room from '../../../models/Room';
 import * as UserModel from '../../../models/User';
-// import { Room as DbRoom} from '../../../entities/Room'; // snazime sa importovat model, ktory bude pracovat s entitou, nie priamo entitu
-// import { User as DbUser} from '../../../entities/User';
+import * as RoomModel from '../../../models/Room';
+import { TRoom } from '../types';
 
-export async function getRoomsWithUsersAndMessages(req: Request, res: Response, next: NextFunction){
-    const body: TLoginRequest = req.body;
 
-    let responseObj: TLoginResponse = {
-        data: null,
-        error: null,
-    };
-    
-    const room = await Room.getById(1);
+export async function createRoom(req: Request, res: Response){
+    const body: TRoom = req.body;
 
-    console.log("ROOM BY ID");
-    if( room ){
-        console.log(room.name);
-        console.log(room.users[0].username);
-        console.log(room.users[1].username);
-    }
+    RoomModel.create(body);
+}
 
-    const rooms = await Room.getAll();
+export async function updateRoom(req: Request, res: Response){
 
-    console.log(rooms);
-    
-    console.log("ALL ROOMS");
-    rooms.forEach(room => {
-        console.log(room.name);
-        console.log(room.users[0].username);
-        console.log(room.users[1].username);
-    }
-    );
+    const body: TRoom = req.body;
 
-    // DbRoom.findAll({
-    //     include:[{model: DbUser, required:true}]
-    // })
-    // .then((rooms: DbRoom[]) => res.status(200).json({ rooms }))
-    // .catch(err => res.status(500).json({ err: ['oops', err] }));
+    RoomModel.updateNameOfRoom(body.name, body.id);
+
+}
+
+export async function deleteRoom(req: Request, res: Response){
+    const body: TRoom = req.body;
+    RoomModel.destroy(body.id);
 }
