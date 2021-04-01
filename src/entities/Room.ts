@@ -1,5 +1,7 @@
-import { Table, Column, Model, DataType} from "sequelize-typescript";
+import { Table, Column, Model, DataType, BelongsToMany} from "sequelize-typescript";
 import { IRoom } from "../types/entities";
+import { User } from './User';
+import { RoomUser } from './RoomUser';
 
 @Table({ tableName: "rooms", modelName: 'room', timestamps: true, paranoid: true })
 export class Room extends Model<Room> implements IRoom {
@@ -21,4 +23,8 @@ export class Room extends Model<Room> implements IRoom {
 
     @Column({ type: DataType.STRING().BINARY, allowNull: true })
     avatar: string | null;
+
+    @BelongsToMany(() => User, () => RoomUser)
+    users: User[];
+
 }

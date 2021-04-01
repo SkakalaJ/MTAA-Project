@@ -1,6 +1,8 @@
-import { Table, Column, Model, DataType } from "sequelize-typescript";
+import { Table, Column, Model, DataType, BelongsToMany } from "sequelize-typescript";
 import { IUser } from "../types/entities";
 import sequelize from "sequelize";
+import { Room } from './Room';
+import { RoomUser } from './RoomUser';
 
 
 @Table({ tableName: "users", modelName: 'user', timestamps: true, paranoid: true })
@@ -47,4 +49,7 @@ export class User extends Model<User> implements IUser {
 
     @Column({ type: DataType.STRING().BINARY, allowNull: true })
     avatar: string | null;
+
+    @BelongsToMany(() => Room, () => RoomUser)
+    companies: Room[];
 }
