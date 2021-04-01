@@ -2,19 +2,19 @@ import { Router, Request, Response } from 'express';
 import * as room from "../../controllers/RoomController";
 import * as message from "../../controllers/MessageController";
 
-export const router = Router({ mergeParams: true });
+export const router = Router();
 
-router.route('/').get(function (req: Request, res: Response){
-    res.send('all');
-});
+// router.route('/').get(function (req: Request, res: Response){
+//     res.send('all');
+// });
 
-router.route('/:roomId').get(function (req: Request, res: Response){
-    res.status(200).send('hello room ' + req.params.roomId);
-});
+// router.route('/:roomId').get(function (req: Request, res: Response){
+//     res.status(200).send('hello room ' + req.params.roomId);
+// });
 
 router.route('/').post(room.createRoom);
 
-router.route('/:roomId').put(room.createRoom);
+router.route('/:roomId').put(room.updateRoom);
 
 router.route('/:roomId').delete(room.deleteRoom);
 // router.route('/all').get(room.getRoomsWithUsersAndMessages);

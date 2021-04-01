@@ -25,12 +25,13 @@ export async function getAll(): Promise<Room[]> {
     });
 }
 
-export async function create(params: TRoomCreateInput): Promise<Room | null> {
+export async function create(name: string, avatar: string | null): Promise<Room> {
     return await Room.create({
-        ...params,
-        createdAt: new Date()
+        name: name,
+        avatar: avatar
     });
 }
+
 
 export async function updateNameOfRoom(newName: string, roomId: number): Promise<[number, Room[]]> {
     return await Room.update(

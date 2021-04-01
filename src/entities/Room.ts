@@ -26,5 +26,4 @@ export class Room extends Model<Room> implements IRoom {
 
     @BelongsToMany(() => User, () => RoomUser)
     users: User[];
-
 }
