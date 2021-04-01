@@ -14,12 +14,7 @@ export async function getRoomsWithUsersAndMessages(req: Request, res: Response, 
         data: null,
         error: null,
     };
-
-    // todo fix loading all rooms with relationships
-
-    // DbRoom.belongsToMany(DbUser, { through: 'room_users', foreignKey: 'roomId' }); // uz defunovane v .../entities/User
-    // DbUser.belongsToMany(DbRoom, { through: 'room_users', foreignKey: 'userId' }); // uz defunovane v .../entities/Room
-
+    
     const room = await Room.getById(1);
 
     console.log("ROOM BY ID");

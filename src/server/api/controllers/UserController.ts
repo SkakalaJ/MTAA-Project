@@ -3,6 +3,7 @@ import { Request, Response, NextFunction, response } from 'express';
 import { TUser, TLoginRequest, TLoginResponse, TLoginResponseData, TRegisterRequest, TRegisterResponse, TRegisterResponseData, TLogoutRequest, TLogoutResponse, TUpdatePasswdResponse, TUpdatePasswdRequest } from '../types';
 import { ELoginError, ELogoutError, ERegisterError, EPasswdUpdateError } from '../types/errors';
 import * as UserModel from '../../../models/User';
+import * as SessionModel from '/../Session';
 import { checkAuthorizationHeader as checkAuthHeader } from './AuthorizationController';
 import { EDeviceType } from '../../../types/entities';
 import { Session } from '../../../entities/Session';
@@ -290,4 +291,33 @@ function isAlphaNumericWithSpecialChars(str: string) {
 
 function validateEmailFormat(email: string){
     return EmailValidator.validate(email);
+}
+
+export async function getUserWithRooms(req: Request, res: Response): Promise<any>{
+
+    const user = await getUserFromSession(req, res);
+
+    return UserModel.getById(user.id);
+}
+
+async function getUserFromSession (req: Request, res: Response): Promise<any>{
+    
+    let token;
+    try{
+        token = await checkAuthHeader(req);
+    }catch(err){
+        return res.status(401).send(err.message);
+    }
+
+    let session:Session | null;
+    try{
+        session = await SessionModel.getByToken(token);
+        if(!session)
+            throw new Error('Session not found');
+
+    }catch(err){
+        return res.status(401).send(err.message);
+    }
+
+    return session.user;
 }

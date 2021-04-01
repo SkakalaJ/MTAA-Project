@@ -1,4 +1,5 @@
 import { User } from '../../entities/User';
+import { Room } from '../../entities/Room';
 import { Session } from '../../entities/Session';
 import * as SessionModel from '../Session';
 import { ISession } from '../../types/entities';
@@ -114,7 +115,13 @@ export async function getByLogin(login: string): Promise<User | null> {
 }
 
 export async function getById(userId: number): Promise<User | null> {
-    return await User.findOne({ where: { id: userId } });
+    return await User.findOne({ 
+        where: { id: userId },
+        include: [{
+            model: Room,
+            as: 'rooms'
+        }],
+    });
 }
 
 export async function create(params: TUserCreateInput): Promise<User | null> {

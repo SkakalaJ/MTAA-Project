@@ -12,6 +12,8 @@ router.route('/register').post(user.registerUser);
 router.route('/logout').post(user.logoutUser);
 router.route('/password').put(user.updatePassword);
 
-router.route('/:userId').get(function (req: Request, res: Response){
+router.route('/rooms').get(user.getUserWithRooms);
+
+router.route('/:userId/rooms').get(function (req: Request, res: Response){
     res.status(200).send('hello user ' + req.params.userId);
 });

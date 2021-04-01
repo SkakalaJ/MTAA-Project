@@ -51,5 +51,5 @@ export class User extends Model<User> implements IUser {
     avatar: string | null;
 
     @BelongsToMany(() => Room, () => RoomUser)
-    companies: Room[];
+    rooms: Room[];
 }
