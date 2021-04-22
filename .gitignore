@@ -2,11 +2,11 @@
 .DS_Store
 
 # Ignoring locally installed modules
-node_modules/
+**/node_modules/
 
 # Ignoring compiled files
-dist/
-build/
+**/dist/
+**/build/
 
 # Ignoring development environment files
 #.env
