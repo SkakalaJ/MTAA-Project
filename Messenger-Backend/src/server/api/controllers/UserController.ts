@@ -11,6 +11,8 @@ import { User } from '../../../entities/User';
 
 export async function verifyLogin(req: Request, res: Response, next: NextFunction): Promise<any>{
 
+    console.log("LOGIN");
+
     let responseObj: TLoginResponse = {
         data: null,
         error: null,
@@ -47,6 +49,8 @@ export async function verifyLogin(req: Request, res: Response, next: NextFunctio
 }
 
 export async function getUser(req: Request, res: Response, next: NextFunction): Promise<any>{
+    console.log("GET USER");
+
     const userId = req.params.userId;
 
     let responseObj: TAnyResponse = {
@@ -98,6 +102,8 @@ export async function getUser(req: Request, res: Response, next: NextFunction): 
 }
 
 export async function registerUser(req: Request, res: Response, next: NextFunction): Promise<any>{
+    console.log("REGIST");
+
     let responseObj: TRegisterResponse = {
         data: null,
         error: null,
@@ -142,6 +148,8 @@ export async function registerUser(req: Request, res: Response, next: NextFuncti
 }
 
 export async function updatePassword(req: Request, res: Response, next: NextFunction){
+    console.log("UPDATE PASSWD");
+
     let responseObj: TUpdatePasswdResponse = {
         data: null,
         error: null,
@@ -194,6 +202,8 @@ export async function updatePassword(req: Request, res: Response, next: NextFunc
 }
 
 export async function logoutUser(req: Request, res: Response, next: NextFunction): Promise<any>{
+    console.log("LOGOUT");
+
     let responseObj: TLogoutResponse = {
         data: null,
         error: null,
@@ -345,6 +355,8 @@ function validateEmailFormat(email: string){
 }
 
 export async function getUserWithRooms(req: Request, res: Response): Promise<any>{
+
+    console.log("GET USER WITH ROOMS");
 
     const user = await getUserFromSession(req, res);
 

@@ -11,6 +11,8 @@ import { checkAuthorizationHeader as checkAuthHeader } from './AuthorizationCont
 
 
 export async function createRoom(req: Request, res: Response, next: NextFunction): Promise<any>{
+    console.log("CREATE ROOM");
+
     let responseObj: TAnyResponse = {
         data: null,
         error: null,
@@ -64,6 +66,8 @@ export async function createRoom(req: Request, res: Response, next: NextFunction
 
 export async function updateRoom(req: Request, res: Response, next: NextFunction): Promise<any>{
 
+    console.log("UPDATE ROOM");
+
     let responseObj: TAnyResponse = {
         data: null,
         error: null,
@@ -116,6 +120,8 @@ export async function updateRoom(req: Request, res: Response, next: NextFunction
 }
 
 export async function deleteRoom(req: Request, res: Response){
+
+    console.log("DELETE ROOM");
     
     const body: TRoom = req.body;
     

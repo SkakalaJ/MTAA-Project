@@ -1,0 +1,36 @@
+import { StyleSheet } from 'react-native';
+import Colors from './constants/colors';
+
+export const appStyles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: Colors.lightBlue,
+    padding: 24
+  },
+
+  content: {
+    flex: 1,
+  },
+
+  scroll: {
+    flexGrow: 1,
+  },
+
+  shadow: {
+    shadowColor: Colors.darkShadow,
+    shadowOffset: {
+      width: 8,
+      height: 8,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 8,
+
+    elevation: 8,
+  },
+
+});
