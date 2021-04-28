@@ -7,6 +7,8 @@ import {
     Text,
     View
   } from 'react-native';  
+import { Container, Content, Item, Input, Button } from 'native-base';
+
 import { appStyles } from '../../appStyles';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -59,17 +61,16 @@ const RegistrationScreenComponent = (props: Props) => {
             style={appStyles.content}
         >
 
-            <SpacedContainer onLayout={onLayout} ready={ready} disableHeader>
-                <View style={styles.content}>
+            <Container>
+                <Content style={{ paddingTop: 100 }}>
                     <Formik
                         innerRef={formik}
-                        // validationSchema={loginSchema}
                         initialValues={{ name: '', email: '', password: '' }}
                         onSubmit={(values) =>
                             register(values.name, values.email, values.password)
                         }
                         >
-                        {({
+                            {({
                         handleChange,
                         handleBlur,
                         handleSubmit,
@@ -78,60 +79,62 @@ const RegistrationScreenComponent = (props: Props) => {
                         touched,
                         }) => (
                         <View>
-                            <TextIn
-                                width={width}
-                                style={{ marginBottom: 24, backgroundColor: Colors.white }}
-                                error={errors.email && 'error username'}
-                                placeholder={'username'}
-                                // textContentType={'emailAddress'}
-                                // autoCompleteType={'email'}
-                                keyboardType={'email-address'}
-                                autoCapitalize={'none'}
-                                value={values.name}
-                                touched={touched.name}
-                                onBlur={handleBlur('email')}
-                                onChangeText={handleChange('email')}
-                            />
-                            <TextIn
-                                width={width}
-                                style={{ marginBottom: 24, backgroundColor: Colors.white }}
-                                error={errors.email && 'error email'}
-                                placeholder={'email'}
-                                textContentType={'emailAddress'}
-                                autoCompleteType={'email'}
-                                keyboardType={'email-address'}
-                                autoCapitalize={'none'}
-                                value={values.email}
-                                touched={touched.email}
-                                onBlur={handleBlur('email')}
-                                onChangeText={handleChange('email')}
-                            />
-                            <TextIn
-                                width={width}
-                                style={{ marginBottom: 24, backgroundColor: Colors.white }}
-                                placeholder={'password'}
-                                error={errors.password && 'password error'}
-                                textContentType={'password'}
-                                autoCompleteType={'password'}
-                                autoCapitalize={'none'}
-                                autoCorrect={false}
-                                secureTextEntry={true}
-                                value={values.password}
-                                touched={touched.password}
-                                onBlur={handleBlur('password')}
-                                onChangeText={handleChange('password')}
-                            />
-                            <CustomButton
-                                width={width}
-                                style={{ marginBottom: 0, backgroundColor: Colors.blue }}
-                                title={"Register"}
+                            <Item>
+                                <Input 
+                                    error={errors.email && 'error username'}
+                                    placeholder={'username'}
+                                    keyboardType={'email-address'}
+                                    autoCapitalize={'none'}
+                                    value={values.email}
+                                    touched={touched.email}
+                                    onBlur={handleBlur('email')}
+                                    onChangeText={handleChange('email')}
+                                    />
+                            </Item>
+                            <Item>
+                                <Input 
+                                    error={errors.email && 'error username'}
+                                    placeholder={'email'}
+                                    textContentType={'emailAddress'}
+                                    autoCompleteType={'email'}
+                                    keyboardType={'email-address'}
+                                    autoCapitalize={'none'}
+                                    value={values.email}
+                                    touched={touched.email}
+                                    onBlur={handleBlur('email')}
+                                    onChangeText={handleChange('email')}
+                                    />
+                            </Item>
+                            <Item last>
+                                <Input placeholder={'password'}
+                                    error={errors.password && 'password error'}
+                                    textContentType={'password'}
+                                    autoCompleteType={'password'}
+                                    autoCapitalize={'none'}
+                                    autoCorrect={false}
+                                    secureTextEntry={true}
+                                    value={values.password}
+                                    touched={touched.password}
+                                    onBlur={handleBlur('password')}
+                                    onChangeText={handleChange('password')}
+                                    />
+                            </Item>
+                            <Button block 
+                                style={{ marginBottom: 10, marginTop:30 }}
                                 onPress={handleSubmit}
-                            />
+                                >
+                                    <Text> Register </Text>
+                                </Button>
                         </View>
                         )}
                     </Formik>
-                </View>
-            </SpacedContainer>
+                    <Button block light
+                        style={{ marginBottom: 10, padding: 4 }}
+                        onPress={() => props.navigation.navigate('Welcome')}>
+                        <Text> Login </Text>
+                    </Button>
+                    </Content>
+                </Container>
         </KeyboardAvoidingView>
     );
 };

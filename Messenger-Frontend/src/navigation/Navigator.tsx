@@ -2,8 +2,13 @@ import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-naviga
 import { ParamListBase, RouteProp } from '@react-navigation/core';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
+
 import { WelcomeScreen } from '../screens/welcome/WelcomeScreen';
 import { RegistrationScreen } from '../screens/registration/RegistrationScreen';
+
+import { ChatScreen } from '../screens/chat/ChatScreen';
+import { RoomScreen } from '../screens/rooms/RoomScreen';
+import { CreateRoomScreen } from '../screens/rooms/CreateRoomScreen';
   
 const Stack = createStackNavigator<NavParamList>();
 const Tab = createBottomTabNavigator<NavParamList>();
@@ -24,6 +29,9 @@ export type NavParamList = {
     // Onboard: undefined
     LoginNavigator: undefined;
     // MainMenuNavigator: { screen: string } | undefined;
+    Chat:undefined;
+    Rooms:undefined;
+    CreateRoom:undefined;
 
     // Login
     Welcome: undefined;
@@ -52,7 +60,18 @@ export function LoginNavigator() {
         <Stack.Navigator initialRouteName="Welcome" headerMode="none">
             <Stack.Screen name="Welcome" component={WelcomeScreen}/>
             <Stack.Screen name="Registration" component={RegistrationScreen}/>
+
+            <Stack.Screen name="Chat" component={ChatScreen}/>
+            <Stack.Screen name="Rooms" component={RoomScreen}/>
+            <Stack.Screen name="CreateRoom" component={CreateRoomScreen}/>
         </Stack.Navigator>
     );
 }
   
+export function ChatNavigator() {
+    return (
+        <Stack.Navigator initialRouteName="Chat" headerMode="none">
+            <Stack.Screen name="Chat" component={ChatScreen}/>
+        </Stack.Navigator>
+    );
+}

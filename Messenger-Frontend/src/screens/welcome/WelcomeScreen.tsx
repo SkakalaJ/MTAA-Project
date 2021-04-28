@@ -7,6 +7,8 @@ import {
     Text,
     View
   } from 'react-native';  
+import { Container, Content, Item, Input, Button } from 'native-base';
+
 import { appStyles } from '../../appStyles';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -54,17 +56,16 @@ const WelcomeScreenComponent = (props: Props) => {
             style={appStyles.content}
         >
 
-            <SpacedContainer onLayout={onLayout} ready={ready} disableHeader>
-                <View style={styles.content}>
+            <Container>
+                <Content style={{ paddingTop: 100 }}>
                     <Formik
                         innerRef={formik}
-                        // validationSchema={loginSchema}
                         initialValues={{ email: '', password: '' }}
                         onSubmit={(values) =>
                             loginWithPassword(values.email, values.password)
                         }
                         >
-                        {({
+                            {({
                         handleChange,
                         handleBlur,
                         handleSubmit,
@@ -73,54 +74,70 @@ const WelcomeScreenComponent = (props: Props) => {
                         touched,
                         }) => (
                         <View>
-                            <TextIn
-                            width={width}
-                            style={{ marginBottom: 24, backgroundColor: Colors.white }}
-                            error={errors.email && 'error username'}
-                            placeholder={'username'}
-                            // textContentType={'emailAddress'}
-                            // autoCompleteType={'email'}
-                            keyboardType={'email-address'}
-                            autoCapitalize={'none'}
-                            value={values.email}
-                            touched={touched.email}
-                            onBlur={handleBlur('email')}
-                            onChangeText={handleChange('email')}
-                            />
-
-                            <TextIn
-                            width={width}
-                            style={{ marginBottom: 24, backgroundColor: Colors.white }}
-                            placeholder={'password'}
-                            error={errors.password && 'password error'}
-                            textContentType={'password'}
-                            autoCompleteType={'password'}
-                            autoCapitalize={'none'}
-                            autoCorrect={false}
-                            secureTextEntry={true}
-                            value={values.password}
-                            touched={touched.password}
-                            onBlur={handleBlur('password')}
-                            onChangeText={handleChange('password')}
-                            />
-
-                            <CustomButton
-                                width={width}
-                                style={{ marginBottom: 0, backgroundColor: Colors.blue }}
-                                title={"Sign in"}
+                            <Item>
+                                <Input 
+                                    error={errors.email && 'error username'}
+                                    placeholder={'username'}
+                                    // textContentType={'emailAddress'}
+                                    // autoCompleteType={'email'}
+                                    keyboardType={'email-address'}
+                                    autoCapitalize={'none'}
+                                    value={values.email}
+                                    touched={touched.email}
+                                    onBlur={handleBlur('email')}
+                                    onChangeText={handleChange('email')}
+                                    />
+                            </Item>
+                            <Item last>
+                                <Input placeholder={'password'}
+                                    error={errors.password && 'password error'}
+                                    textContentType={'password'}
+                                    autoCompleteType={'password'}
+                                    autoCapitalize={'none'}
+                                    autoCorrect={false}
+                                    secureTextEntry={true}
+                                    value={values.password}
+                                    touched={touched.password}
+                                    onBlur={handleBlur('password')}
+                                    onChangeText={handleChange('password')}
+                                    />
+                            </Item>
+                            <Button block 
+                                style={{ marginBottom: 10, marginTop:30 }}
                                 onPress={handleSubmit}
-                            />
+                                >
+                                    <Text> Login </Text>
+                                </Button>
                         </View>
                         )}
                     </Formik>
-                    <CustomButton
-                        width={width}
-                        style={{ marginBottom: 0 }}
-                        title={"Register"}
-                        onPress={() => props.navigation.navigate('Registration')}
-                    />
-                </View>
-            </SpacedContainer>
+                    <Button block light
+                        style={{ marginBottom: 10, padding: 4 }}
+                        onPress={() => props.navigation.navigate('Registration')}>
+                        <Text> Register </Text>
+                    </Button>
+                    
+                    <View>
+                        <Text>
+                            Ukazky screenov:
+                        </Text>
+                        <Button rounded warning
+                        onPress={() => props.navigation.navigate('Chat')}>
+                            <Text>Home</Text>
+                        </Button>
+                        <Button rounded warning
+                        onPress={() => props.navigation.navigate('Rooms')}>
+                            <Text>Rooms</Text>
+                        </Button>
+                        <Button rounded warning
+                        onPress={() => props.navigation.navigate('CreateRoom')}>
+                            <Text>Create Room</Text>
+                        </Button>
+                    </View>
+                    
+                    
+                </Content>
+            </Container>
         </KeyboardAvoidingView>
     );
 };
