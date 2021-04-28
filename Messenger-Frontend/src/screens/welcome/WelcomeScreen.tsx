@@ -133,6 +133,14 @@ const WelcomeScreenComponent = (props: Props) => {
                         onPress={() => props.navigation.navigate('CreateRoom')}>
                             <Text>Create Room</Text>
                         </Button>
+                        <Button rounded warning
+                        onPress={() => props.navigation.navigate('Profile')}>
+                            <Text>Profile</Text>
+                        </Button>
+                        <Button rounded warning
+                        onPress={() => props.navigation.navigate('ChangePassword')}>
+                            <Text>Change password</Text>
+                        </Button>
                     </View>
                     
                     

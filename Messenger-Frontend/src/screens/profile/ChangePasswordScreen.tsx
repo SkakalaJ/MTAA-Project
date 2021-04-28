@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & StackNavProp<NavParamList, 'Welcome'>;
 
-const CreateRoomScreenComponent = (props: Props) => {
+const ChangePasswordScreenComponent = (props: Props) => {
     
     const [width, onLayout, ready] = useComponentWidth();
     return (
@@ -54,29 +54,29 @@ const CreateRoomScreenComponent = (props: Props) => {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Create new room</Title>
+                        <Title>Change password</Title>
                     </Body>
                     <Right/>
                 </Header>
              
                 <Content>
-                    <View style={{ paddingTop:100 }}>
+                    <View style={{ paddingTop:80 }}>
                         <ListItem avatar>
                             <Body style={styles.middle}>
                             
-                               <Text style={{ paddingBottom:10 }}>
-                                    Upload photo
-                               </Text>
-                               <Thumbnail source={{ uri: 'https://icons-for-free.com/iconfiles/png/512/file+up+upload+icon-1320086060265757591.png' }} />
-                               
-                               <Item>
-                                    <Input placeholder={'room name'}
+                                <Item>
+                                    <Input placeholder={'old password'}
                                         style={{ marginBottom: 10, marginTop:30 }}/>
-                               </Item>
+                                </Item>
+                                <Item>
+                                    <Input placeholder={'new password'}
+                                        style={{ marginBottom: 10, marginTop:30 }}/>
+                                </Item>
+
                                <Button block 
-                                style={{ marginBottom: 10, marginTop:30 }}
+                                style={{ marginBottom: 10, marginTop:50 }}
                                 >
-                                    <Text> Save </Text>
+                                    <Text> Change </Text>
                                 </Button>
                             </Body>
                           
@@ -88,7 +88,7 @@ const CreateRoomScreenComponent = (props: Props) => {
     );
 };
 
-export const CreateRoomScreen = connect(mapStateToProps, mapDispatchToProps)(CreateRoomScreenComponent);
+export const ChangePasswordScreen = connect(mapStateToProps, mapDispatchToProps)(ChangePasswordScreenComponent);
 
 const styles = StyleSheet.create({
     middle: {
