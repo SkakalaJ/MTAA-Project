@@ -9,17 +9,13 @@ import { Container, Header, Title, Content, Item,
     Button, Left, Right, Body, Icon} from 'native-base';
 import { GiftedChat, SystemMessage, IMessage,  } from 'react-native-gifted-chat'
 
-import { appStyles } from '../../appStyles';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { useComponentWidth } from '../../hooks/useWidth';
-
 import { NavParamList, StackNavProp } from '../../navigation/Navigator';
 import { IAppState } from '../../store';
-import CustomButton from '../../view/Button';
-import TextIn from '../../view/TextInput';
-import { SpacedContainer } from '../Container';
-import { Formik, FormikProps } from 'formik';
+
+import * as client from '../../api/client';
 
 
 const mapStateToProps = (state: IAppState) => {
@@ -62,37 +58,27 @@ const ChatRoomScreenComponent = (props: Props) => {
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
     }, [])
 
-    return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={appStyles.content}
-        >
-            <Container>
-                <Header>
-                    <Left>
-                        <Button transparent>
-                            <Icon name='arrow-back' />
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Username</Title>
-                    </Body>
-                    <Right/>
-                </Header>
-            
-                {console.log(messages)}
+    return (       
+        /* <Header>
+            <Left>
+                <Button transparent>
+                    <Icon name='arrow-back' />
+                </Button>
+            </Left>
+            <Body>
+                <Title>Username</Title>
+            </Body>
+            <Right/>
+        </Header> */
+    
+        <GiftedChat
+            messages={messages}
+            onSend={messages => onSend(messages)}
+            user={{
+                _id: 1, // change to logged user ID 
+            }}
+            />
 
-                <Content>
-                <GiftedChat
-                    messages={messages}
-                    onSend={messages => onSend(messages)}
-                    user={{
-                        _id: 1,
-                    }}
-                    />
-                </Content>
-            </Container>
-        </KeyboardAvoidingView>
     );
 };
 
