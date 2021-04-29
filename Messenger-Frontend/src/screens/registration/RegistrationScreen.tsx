@@ -23,6 +23,7 @@ import TextIn from '../../view/TextInput';
 import { SpacedContainer } from '../Container';
 import { Formik, FormikProps } from 'formik';
 import axios from 'axios';
+import { axiosClient } from '../../api';
 // import { loginSchema } from '../../utils/validationSchemas';
 
 const mapStateToProps = (state: IAppState) => {
@@ -46,11 +47,9 @@ const RegistrationScreenComponent = (props: Props) => {
     );
     
     const register = (name: string, email: string, password: string) => {
-        axios({
-            headers: {"Access-Control-Allow-Origin": "*"},
-            method: 'post',
-            url: 'http://localhost:4000/api/users/login'
-        }).then(() => {console.log("then")}).catch((err) => {console.log(err)});
+        axiosClient.post('/users/login')
+        .then((response) => {console.log(response.data)})
+        .catch((error) => {console.log(error)});
     };
     
 
@@ -81,40 +80,40 @@ const RegistrationScreenComponent = (props: Props) => {
                         <View>
                             <Item>
                                 <Input 
-                                    error={errors.email && 'error username'}
+                                    // error={errors.email && 'error username'}
                                     placeholder={'username'}
                                     keyboardType={'email-address'}
                                     autoCapitalize={'none'}
                                     value={values.email}
-                                    touched={touched.email}
+                                    // touched={touched.email}
                                     onBlur={handleBlur('email')}
                                     onChangeText={handleChange('email')}
                                     />
                             </Item>
                             <Item>
                                 <Input 
-                                    error={errors.email && 'error username'}
+                                    // error={errors.email && 'error username'}
                                     placeholder={'email'}
                                     textContentType={'emailAddress'}
                                     autoCompleteType={'email'}
                                     keyboardType={'email-address'}
                                     autoCapitalize={'none'}
                                     value={values.email}
-                                    touched={touched.email}
+                                    // touched={touched.email}
                                     onBlur={handleBlur('email')}
                                     onChangeText={handleChange('email')}
                                     />
                             </Item>
                             <Item last>
                                 <Input placeholder={'password'}
-                                    error={errors.password && 'password error'}
+                                    // error={errors.password && 'password error'}
                                     textContentType={'password'}
                                     autoCompleteType={'password'}
                                     autoCapitalize={'none'}
                                     autoCorrect={false}
                                     secureTextEntry={true}
                                     value={values.password}
-                                    touched={touched.password}
+                                    // touched={touched.password}
                                     onBlur={handleBlur('password')}
                                     onChangeText={handleChange('password')}
                                     />

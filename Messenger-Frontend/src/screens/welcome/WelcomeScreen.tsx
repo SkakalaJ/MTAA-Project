@@ -76,28 +76,28 @@ const WelcomeScreenComponent = (props: Props) => {
                         <View>
                             <Item>
                                 <Input 
-                                    error={errors.email && 'error username'}
+                                    // error={errors.email && 'error username'}
                                     placeholder={'username'}
                                     // textContentType={'emailAddress'}
                                     // autoCompleteType={'email'}
                                     keyboardType={'email-address'}
                                     autoCapitalize={'none'}
                                     value={values.email}
-                                    touched={touched.email}
+                                    // touched={touched.email}
                                     onBlur={handleBlur('email')}
                                     onChangeText={handleChange('email')}
                                     />
                             </Item>
                             <Item last>
                                 <Input placeholder={'password'}
-                                    error={errors.password && 'password error'}
+                                    // error={errors.password && 'password error'}
                                     textContentType={'password'}
                                     autoCompleteType={'password'}
                                     autoCapitalize={'none'}
                                     autoCorrect={false}
                                     secureTextEntry={true}
                                     value={values.password}
-                                    touched={touched.password}
+                                    // touched={touched.password}
                                     onBlur={handleBlur('password')}
                                     onChangeText={handleChange('password')}
                                     />
