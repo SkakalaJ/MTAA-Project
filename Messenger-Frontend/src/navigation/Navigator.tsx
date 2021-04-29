@@ -11,7 +11,7 @@ import { RoomScreen } from '../screens/rooms/RoomScreen';
 import { CreateRoomScreen } from '../screens/rooms/CreateRoomScreen';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { ChangePasswordScreen } from '../screens/profile/ChangePasswordScreen';
-
+import { ChatRoomScreen } from '../screens/chat/ChatRoomScreen';
   
 const Stack = createStackNavigator<NavParamList>();
 const Tab = createBottomTabNavigator<NavParamList>();
@@ -37,6 +37,7 @@ export type NavParamList = {
     CreateRoom:undefined;
     Profile:undefined;
     ChangePassword:undefined;
+    ChatRoom:undefined;
 
     // Login
     Welcome: undefined;
@@ -71,6 +72,7 @@ export function LoginNavigator() {
             <Stack.Screen name="CreateRoom" component={CreateRoomScreen}/>
             <Stack.Screen name="Profile" component={ProfileScreen}/>
             <Stack.Screen name="ChangePassword" component={ChangePasswordScreen}/>
+            <Stack.Screen name="ChatRoom" component={ChatRoomScreen}/>
         </Stack.Navigator>
     );
 }

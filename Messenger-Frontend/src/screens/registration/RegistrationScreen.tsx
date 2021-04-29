@@ -104,10 +104,10 @@ const RegistrationScreenComponent = (props: Props) => {
                                     placeholder={'username'}
                                     keyboardType={'email-address'}
                                     autoCapitalize={'none'}
-                                    value={values.email}
+                                    value={values.name}
                                     // touched={touched.email}
-                                    onBlur={handleBlur('email')}
-                                    onChangeText={handleChange('email')}
+                                    onBlur={handleBlur('name')}
+                                    onChangeText={handleChange('name')}
                                     />
                             </Item>
                             <Item>
