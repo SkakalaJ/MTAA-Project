@@ -55,7 +55,6 @@ const RegistrationScreenComponent = (props: Props) => {
             }
         }
 
-        // Passed test
         try{
             var res = await client.post.postLogin(loginBody);
             console.log(res.data);
@@ -63,7 +62,6 @@ const RegistrationScreenComponent = (props: Props) => {
             console.log(err.response);
         }
 
-        // Error test
         try{
             var res = await client.post.postLogin(null);
             console.log(res.data);

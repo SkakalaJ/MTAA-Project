@@ -48,22 +48,25 @@ const ChatRoomScreenComponent = (props: Props) => {
           name: 'React Native',
           avatar: 'https://placeimg.com/140/140/any',
         },
-      }
+    }
 
     useEffect(() => {
-        setMessages([message]);
-      }, [])
+        setMessages([...messages, message]);
+    }, [])
     
-      const onSend = useCallback((messages = []) => {
+    useEffect(() => {
+        console.log(messages);
+    }, [messages])
+
+    const onSend = useCallback((messages = []) => {
         setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-      }, [])
+    }, [])
 
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={appStyles.content}
         >
-
             <Container>
                 <Header>
                     <Left>
@@ -76,7 +79,9 @@ const ChatRoomScreenComponent = (props: Props) => {
                     </Body>
                     <Right/>
                 </Header>
-             
+            
+                {console.log(messages)}
+
                 <Content>
                 <GiftedChat
                     messages={messages}
