@@ -49,7 +49,8 @@ const ChangePasswordScreenComponent = (props: Props) => {
             <Container>
                 <Header>
                     <Left>
-                        <Button transparent>
+                        <Button transparent
+                        onPress={() => props.navigation.navigate('Profile')}>
                             <Icon name='arrow-back' />
                         </Button>
                     </Left>
