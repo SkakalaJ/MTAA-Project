@@ -13,6 +13,9 @@ import { IAppState } from './src/store';
 import { Dispatch } from 'redux';
 import { Provider } from 'react-redux';
 import Colors from './src/constants/colors';
+import { transitions, positions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import {
   createStackNavigator,
@@ -43,16 +46,25 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 const App = () => {
   const colorScheme = useColorScheme();
 
+  const options = {
+    timeout: 5000,
+    position: positions.BOTTOM_CENTER,
+    // transition: transitions.SCALE
+    containerStyle: { fontSize: '70%' },
+  };
+
   useEffect(() => {
 
   }, []);
 
   return (
     <Provider store={store}>
-        <StatusBar backgroundColor={Colors.background} barStyle="dark-content"/>
-        <NavigationContainer>
-          <RootNavigator />
-        </NavigationContainer>
+        <AlertProvider template={AlertTemplate} {...options}>
+          <StatusBar backgroundColor={Colors.background} barStyle="dark-content"/>
+          <NavigationContainer>
+            <RootNavigator />
+          </NavigationContainer>
+        </AlertProvider>
     </Provider>
 
   );

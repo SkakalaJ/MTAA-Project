@@ -82,15 +82,13 @@ const ChatRoomScreenComponent = (props: Props) => {
             
                 {console.log(messages)}
 
-                <Content>
                 <GiftedChat
                     messages={messages}
                     onSend={messages => onSend(messages)}
                     user={{
                         _id: 1,
                     }}
-                    />
-                </Content>
+                />
             </Container>
         </KeyboardAvoidingView>
     );

@@ -25,6 +25,8 @@ import { Formik, FormikProps } from 'formik';
 import * as client from '../../api/client';
 // import { loginSchema } from '../../utils/validationSchemas';
 
+import { useAlert } from "react-alert";
+
 const mapStateToProps = (state: IAppState) => {
     return {
         
@@ -41,14 +43,17 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 
 const RegistrationScreenComponent = (props: Props) => {
 
+    const alert = useAlert();
+
     const formik = React.useRef<FormikProps<{ name: string, email: string; password: string }>>(
         null
     );
     
     const register = async (name: string, email: string, password: string) => {
         const loginBody = {
-            username: "JurajSkakala",
-            password: "JS_FIIT",
+            username: name,
+            password: password,
+            email: email,
             geolocation: false,
             device: {
                 type: "mobile phone"
@@ -56,17 +61,11 @@ const RegistrationScreenComponent = (props: Props) => {
         }
 
         try{
-            var res = await client.post.postLogin(loginBody);
-            console.log(res.data);
+            var res = await client.post.postRegister(loginBody);
+            alert.success("Registration successful!");
+            props.navigation.navigate('Welcome');
         }catch(err){
-            console.log(err.response);
-        }
-
-        try{
-            var res = await client.post.postLogin(null);
-            console.log(res.data);
-        }catch(err){
-            console.log(err.response);
+            alert.error(err.response.data.error);
         }
     };
     
@@ -106,7 +105,7 @@ const RegistrationScreenComponent = (props: Props) => {
                                     // touched={touched.email}
                                     onBlur={handleBlur('name')}
                                     onChangeText={handleChange('name')}
-                                    />
+                                />
                             </Item>
                             <Item>
                                 <Input 
