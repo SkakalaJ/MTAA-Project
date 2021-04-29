@@ -22,8 +22,7 @@ import CustomButton from '../../view/Button';
 import TextIn from '../../view/TextInput';
 import { SpacedContainer } from '../Container';
 import { Formik, FormikProps } from 'formik';
-import axios from 'axios';
-import { axiosClient } from '../../api';
+import * as client from '../../api/client';
 // import { loginSchema } from '../../utils/validationSchemas';
 
 const mapStateToProps = (state: IAppState) => {
@@ -46,10 +45,31 @@ const RegistrationScreenComponent = (props: Props) => {
         null
     );
     
-    const register = (name: string, email: string, password: string) => {
-        axiosClient.post('/users/login')
-        .then((response) => {console.log(response.data)})
-        .catch((error) => {console.log(error)});
+    const register = async (name: string, email: string, password: string) => {
+        const loginBody = {
+            username: "JurajSkakala",
+            password: "JS_FIIT",
+            geolocation: false,
+            device: {
+                type: "mobile phone"
+            }
+        }
+
+        // Passed test
+        try{
+            var res = await client.post.postLogin(loginBody);
+            console.log(res.data);
+        }catch(err){
+            console.log(err.response);
+        }
+
+        // Error test
+        try{
+            var res = await client.post.postLogin(null);
+            console.log(res.data);
+        }catch(err){
+            console.log(err.response);
+        }
     };
     
 

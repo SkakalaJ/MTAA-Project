@@ -18,7 +18,6 @@ import {
   createStackNavigator,
   StackNavigationProp
 } from '@react-navigation/stack';
-import { axiosClient } from './src/api';
 
 
 import {
