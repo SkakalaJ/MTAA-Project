@@ -158,3 +158,13 @@ export async function getByIdWithRoomId(userId: number, roomId: number): Promise
         }],
     });
 }
+
+export async function getAllWithRoomId(): Promise<User[] | null> {
+    return await User.findAll({ 
+        where: { deletedAt: null },
+        include: [{
+            model: Room,
+            as: 'rooms'
+        }],
+    });
+}

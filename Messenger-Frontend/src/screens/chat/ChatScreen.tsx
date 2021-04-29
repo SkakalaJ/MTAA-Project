@@ -15,11 +15,7 @@ import { useComponentWidth } from '../../hooks/useWidth';
 
 import { NavParamList, StackNavProp } from '../../navigation/Navigator';
 import { IAppState } from '../../store';
-import Colors from '../../constants/colors';
-import CustomButton from '../../view/Button';
-import TextIn from '../../view/TextInput';
-import { SpacedContainer } from '../Container';
-import { Formik, FormikProps } from 'formik';
+import * as client from '../../api/client';
 
 
 const mapStateToProps = (state: IAppState) => {
@@ -39,6 +35,13 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 const ChatScreenComponent = (props: Props) => {
 
     const [width, onLayout, ready] = useComponentWidth();
+
+    const allUsers = async () => {
+        var users = await client.get.getAllUserWithRooms('1ae84552-780c-4868-9afe-3d1e676852bc');
+        console.log(users.data);
+    } 
+    allUsers();
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -134,7 +137,8 @@ const styles = StyleSheet.create({
     },
     right: {
         flex: 0.2,
-        paddingBottom:0
+        paddingBottom:0,
+        border:'none'
     },
     horizontalIcon: {
         margin: 7,

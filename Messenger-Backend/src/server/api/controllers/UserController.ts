@@ -384,3 +384,8 @@ async function getUserFromSession (req: Request, res: Response): Promise<any>{
 
     return session.user;
 }
+
+export async function getAllUsers(req: Request, res: Response): Promise<any>{
+
+    return UserModel.getAllWithRoomId();
+}
