@@ -356,14 +356,78 @@ function validateEmailFormat(email: string){
 
 export async function getUserWithRooms(req: Request, res: Response): Promise<any>{
 
-    console.log("GET USER WITH ROOMS");
+    // let responseObj: TAnyResponse = {
+    //     data: null,
+    //     error: null,
+    // };
 
-    const user = await getUserFromSession(req, res);
+    // let token;
+    // try{
+    //     token = await checkAuthHeader(req);
+    // }catch(err){
+    //     responseObj.error = err.message;
+    //     return res.status(401).send(responseObj);
+    // }
 
-    return UserModel.getById(user.id);
+    // let session:Session | null;
+    // try{
+    //     session = await SessionModel.getByToken(token);
+    //     if(!session)
+    //         throw new Error(EMessageError.Permission);
+
+    // }catch(err){
+    //     responseObj.error = err.message;
+    //     return res.status(401).send(responseObj);
+    // }
+
+    // const user = await UserModel.getByIdWithRoomId(session.userId, Number(roomId));
+
+    // if(!user){
+    //     responseObj.error = EMessageError.Permission;
+    //     return res.status(401).send(responseObj);
+    // }
+
+    // const messages = await MessageModel.findForRoomOffset(Number(offset), 30, Number(roomId));
+
+    // let msgs = [];
+    // if( messages && messages?.length > 0 )
+    //     for (const msg of messages) {
+    //         let m: any = {
+    //             id:msg.id,
+    //             userId: msg.userId,
+    //             content: msg.content,
+    //             createdAt: msg.createdAt,
+    //             medium: msg.medium,
+    //             medias: []
+    //         }
+
+    //         if(m.medium === true){
+    //             for (const medium of msg.medias) {
+    //                 m.medias.push({id: medium.id, name: medium.name, fileName: medium.fileName, type: medium.type, format: medium.format, url: medium.url });
+    //             }
+    //         }
+    //         else{
+    //             m.medias = null;
+    //         }
+
+    //         msgs.push(m);
+    //     }
+
+    // let data: any = {
+    //     roomId: Number(roomId),
+    //     itemCount: msgs.length,
+    //     items: msgs
+    // }
+
+    // responseObj.data = data;
+    // return res.status(200).send(responseObj);
+
+    // const user = await getUserFromSession(req, res);
+
+    // return UserModel.getById(user.id);
 }
 
-async function getUserFromSession (req: Request, res: Response): Promise<any>{
+async function getUserFromSession(req: Request, res: Response): Promise<any>{
     
     let token;
     try{
