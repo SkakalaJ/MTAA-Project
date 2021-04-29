@@ -22,6 +22,9 @@ import CustomButton from '../../view/Button';
 import TextIn from '../../view/TextInput';
 import { SpacedContainer } from '../Container';
 import { Formik, FormikProps } from 'formik';
+import IdleTimer from 'react-idle-timer';
+import * as client from '../../api/client';
+import { useAlert } from "react-alert";
 // import { loginSchema } from '../../utils/validationSchemas';
 
 const mapStateToProps = (state: IAppState) => {
@@ -40,13 +43,42 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 
 const WelcomeScreenComponent = (props: Props) => {
 
+    const alert = useAlert();
+
     const formik = React.useRef<FormikProps<{ email: string; password: string }>>(
         null
     );
     
-    const loginWithPassword = (email: string, password: string) => {
-        
+    const handleOnAction = () => {
+
+    }
+    
+    const handleOnActive = () => {
+
+    }
+
+    const handleOnIdle = () => {
+
+    }
+
+    const loginWithPassword = async (username: string, password: string) => {
+        const loginBody = {
+            username: username,
+            password: password,
+            geolocation: false,
+            device: {
+                type: "mobile phone"
+            }
+        }
+
+        try{
+            var res = await client.post.postLogin(loginBody);
+            console.log(res.data);
+        }catch(err){
+            alert.error(err.response.data.error);
+        }
     };
+    
     
 
     const [width, onLayout, ready] = useComponentWidth();

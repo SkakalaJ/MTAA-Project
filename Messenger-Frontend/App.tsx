@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 
-const App = () => {
+const App = (props: Props) => {
   const colorScheme = useColorScheme();
 
   const options = {
@@ -54,7 +54,7 @@ const App = () => {
   };
 
   useEffect(() => {
-
+    
   }, []);
 
   return (
@@ -66,7 +66,6 @@ const App = () => {
           </NavigationContainer>
         </AlertProvider>
     </Provider>
-
   );
 };
 
