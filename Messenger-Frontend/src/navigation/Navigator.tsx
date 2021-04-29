@@ -29,15 +29,15 @@ export interface BottomNavProp<NavParamList extends ParamListBase, RouteName ext
 export type NavParamList = {
     // Root
     Splash: undefined;
-    // Onboard: undefined
+    Onboard: undefined
     LoginNavigator: undefined;
-    // MainMenuNavigator: { screen: string } | undefined;
-    Chat:undefined;
-    Rooms:undefined;
-    CreateRoom:undefined;
-    Profile:undefined;
-    ChangePassword:undefined;
-    ChatRoom:undefined;
+    MainMenuNavigator: { screen: string };
+    Chat: undefined;
+    Rooms: undefined;
+    CreateRoom: undefined;
+    Profile: undefined;
+    ChangePassword: undefined;
+    ChatRoom: undefined;
 
     // Login
     Welcome: undefined;
@@ -63,7 +63,7 @@ export function RootNavigator() {
 
 export function LoginNavigator() {
     return (
-        <Stack.Navigator initialRouteName="Welcome" headerMode="none">
+        <Stack.Navigator initialRouteName="Welcome" headerMode="screen">
             <Stack.Screen name="Welcome" component={WelcomeScreen}/>
             <Stack.Screen name="Registration" component={RegistrationScreen}/>
 

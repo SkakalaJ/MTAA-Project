@@ -61,13 +61,6 @@ const RegistrationScreenComponent = (props: Props) => {
             }
         }
 
-        // try{
-        //     var res = await client.get.getUserById(2, '716e2dd1-3c09-43b2-aafe-48127086a04e');
-        //     console.log(res.data);
-        // }catch(err){
-        //     alert.error(err.response.data.error);
-        // }
-
         try{
             var res = await client.post.postRegister(registerBody);
             alert.success("Registration successful!");

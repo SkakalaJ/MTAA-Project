@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
     Image,
     KeyboardAvoidingView,
@@ -22,6 +23,14 @@ import CustomButton from '../../view/Button';
 import TextIn from '../../view/TextInput';
 import { SpacedContainer } from '../Container';
 import { Formik, FormikProps } from 'formik';
+
+import IdleTimer from 'react-idle-timer';
+import * as client from '../../api/client';
+import { useAlert } from "react-alert";
+import { useIdleTimer } from 'react-idle-timer';
+import {useRoute} from '@react-navigation/native';
+import * as minio from '../../api/minio';
+
 // import { loginSchema } from '../../utils/validationSchemas';
 
 const mapStateToProps = (state: IAppState) => {
@@ -38,16 +47,100 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & StackNavProp<NavParamList, 'Welcome'>;
 
+let intervalId: NodeJS.Timeout;
+
+
 const WelcomeScreenComponent = (props: Props) => {
+    const alert = useAlert();
+
 
     const formik = React.useRef<FormikProps<{ email: string; password: string }>>(
         null
     );
     
-    const loginWithPassword = (email: string, password: string) => {
-        
+    
+    const handleOnAction = () => {
+        // minio.uploadFile();
+        // getToken();
+    }
+    
+    const handleOnActive = () => {
+        clearInterval(intervalId);
+    }
+
+    const handleOnIdle = () => {
+        const {index, routes} = props.navigation.dangerouslyGetState();
+        const currentScreen = routes[index].name;
+
+        if( currentScreen != "Welcome" && currentScreen != "Registration" ){
+            intervalId = setInterval(checkSession, 10000);
+        }
+    }
+
+    const checkSession = async () => {
+        try{
+            const token = await AsyncStorage.getItem('accessToken') || '';
+            await client.get.getUserById(9999999, token);
+
+            const {index, routes} = props.navigation.dangerouslyGetState();
+            const currentScreen = routes[index].name;
+
+            if( currentScreen == "Welcome" || currentScreen == "Registration" ){
+                props.navigation.navigate('Chat');
+            }
+
+        }catch(err){
+            props.navigation.navigate('Welcome');
+            alert.error("Session expired! Logout...");
+        }
+    }
+
+    const getToken = async () => {
+        const token = await AsyncStorage.getItem('accessToken') || '';
+        checkSession();
+    }
+
+    useEffect(() => {
+        getToken();
+    }, []);
+
+    const loginWithPassword = async (username: string, password: string) => {
+        const loginBody = {
+            username: username,
+            password: password,
+            geolocation: false,
+            device: {
+                type: "mobile phone"
+            }
+        }
+
+        try{
+            var res = await client.post.postLogin(loginBody);
+            AsyncStorage.setItem('accessToken', res.data.data.accessToken);
+            AsyncStorage.setItem('userBid', res.data.data.accessToken);
+            AsyncStorage.setItem('username', res.data.data.accessToken);
+            props.navigation.navigate('Chat');
+
+            // console.log(res.data.data.accessToken);
+        }catch(err){
+            if( err.response.status == 307 && err.response.data.error == null ){
+                AsyncStorage.setItem('accessToken', err.response.data.data.accessToken);
+                AsyncStorage.setItem('userBid', err.response.data.data.userBid);
+                AsyncStorage.setItem('username', err.response.data.data.username);
+                props.navigation.navigate('Chat');
+            }
+            else
+                alert.error(err.response.data.error);    
+        }
     };
     
+    const { getRemainingTime, getLastActiveTime, reset } = useIdleTimer({
+        timeout: 2000,
+        onIdle: handleOnIdle,
+        onActive: handleOnActive,
+        onAction: handleOnAction,
+        debounce: 100
+    })
 
     const [width, onLayout, ready] = useComponentWidth();
     return (
@@ -74,6 +167,7 @@ const WelcomeScreenComponent = (props: Props) => {
                         touched,
                         }) => (
                         <View>
+
                             <Item>
                                 <Input 
                                     // error={errors.email && 'error username'}
@@ -150,6 +244,7 @@ const WelcomeScreenComponent = (props: Props) => {
                     
                 </Content>
             </Container>
+
         </KeyboardAvoidingView>
     );
 };
