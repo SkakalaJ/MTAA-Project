@@ -37,7 +37,7 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 const ChatRoomScreenComponent = (props: Props) => {
     
     const [width, onLayout, ready] = useComponentWidth();
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState<IMessage[]>([]);
 
     var message:IMessage = {
         _id: 1,
@@ -51,9 +51,7 @@ const ChatRoomScreenComponent = (props: Props) => {
       }
 
     useEffect(() => {
-        setMessages([
-            message
-        ])
+        setMessages([message]);
       }, [])
     
       const onSend = useCallback((messages = []) => {
