@@ -20,7 +20,7 @@ export type Props = {
 }
 
 export function Container(props: Props) {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
   return (
     <View style={appStyles.content}>

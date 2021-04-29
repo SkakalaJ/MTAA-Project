@@ -52,3 +52,18 @@ services:
       - "5050:80"
     networks:
       - local-network
+
+  s3:
+    image: minio/minio
+    container_name: messenger-minio
+    volumes:
+      - ./storage/minio:/data
+    environment:
+      MINIO_ACCESS_KEY: minio_access_key
+      MINIO_SECRET_KEY: minio_secret_key
+    command: server /data
+    networks:
+      - local-network
+      - external-network
+    ports:
+      - "9000:9000"
