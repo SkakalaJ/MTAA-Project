@@ -387,5 +387,56 @@ async function getUserFromSession (req: Request, res: Response): Promise<any>{
 
 export async function getAllUsers(req: Request, res: Response): Promise<any>{
 
-    return UserModel.getAllWithRoomId();
+    let responseObj: TAnyResponse = {
+        data: null,
+        error: null,
+    };
+
+    let token;
+    try{
+        token = await checkAuthHeader(req);
+    }catch(err){
+        responseObj.error = err.message;
+        return res.status(401).send(responseObj);
+    }
+
+    let session:Session | null;
+    try{
+        session = await SessionModel.getByToken(token);
+        if(!session)
+            throw new Error(EMessageError.Permission);
+
+    }catch(err){
+        responseObj.error = err.message;
+        return res.status(401).send(responseObj);
+    }
+
+    const users = await UserModel.getAll();
+
+    if(!users){
+        responseObj.data = "Users not found.";
+        return res.status(200).send(responseObj);
+    }
+
+    let usrs = [];
+    if( users && users?.length > 0 )
+        for (const usr of users) {
+            let u: any = {
+                bid: usr.bid,
+                createdAt: usr.createdAt,
+                username: usr.username,
+                verified: usr.verified,
+                avatar: usr.avatar
+            }
+
+            usrs.push(u);
+        }
+
+    let data: any = {
+        itemCount: usrs.length,
+        items: usrs
+    }
+
+    responseObj.data = data;
+    return res.status(200).send(responseObj);
 }

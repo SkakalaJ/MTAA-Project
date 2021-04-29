@@ -53,7 +53,7 @@ export class Get{
         return await instance.get('/users/' + userId, { headers: {'Authorization': 'Bearer ' + token}});
     }
 
-    getAllUserWithRooms = async (token: string) => {
+    getUsersAll = async (token: string) => {
         return await instance.get('/users', { headers: {'Authorization': 'Bearer ' + token}});
     }
 
@@ -64,6 +64,7 @@ export class Get{
 }
 
 export class Delete{
+
     deleteMessage = async (roomId: number, messageId: number, token: string) => {
         return await instance.delete('/rooms/' + roomId + '/messages/' + messageId, { headers: {'Authorization': 'Bearer ' + token}});
     }

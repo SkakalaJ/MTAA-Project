@@ -23,6 +23,7 @@ import TextIn from '../../view/TextInput';
 import { SpacedContainer } from '../Container';
 import { Formik, FormikProps } from 'formik';
 import * as client from '../../api/client';
+import AsyncStorage from '@react-native-community/async-storage';
 // import { loginSchema } from '../../utils/validationSchemas';
 
 import { useAlert } from "react-alert";
@@ -61,8 +62,19 @@ const RegistrationScreenComponent = (props: Props) => {
             }
         }
 
+        // try{
+        //     var res = await client.post.postRegister(registerBody);
+        //     alert.success("Registration successful!");
+        //     props.navigation.navigate('Welcome');
+        // }catch(err){
+        //     alert.error(err.response.data.error);
+        // }
+
+        const token = await AsyncStorage.getItem('accessToken') || '';
+
         try{
-            var res = await client.post.postRegister(registerBody);
+            var res = await client.get.getUsersAll(token);
+            console.log(res.data);
             alert.success("Registration successful!");
             props.navigation.navigate('Welcome');
         }catch(err){

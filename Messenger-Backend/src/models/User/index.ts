@@ -168,3 +168,9 @@ export async function getAllWithRoomId(): Promise<User[] | null> {
         }],
     });
 }
+
+export async function getAll(): Promise<User[] | null> {
+    return await User.findAll({
+        where: { deletedAt: null },
+    });
+}

@@ -37,7 +37,7 @@ const ChatScreenComponent = (props: Props) => {
     const [width, onLayout, ready] = useComponentWidth();
 
     const allUsers = async () => {
-        var users = await client.get.getAllUserWithRooms('1ae84552-780c-4868-9afe-3d1e676852bc');
+        var users = await client.get.getUsersAll('1ae84552-780c-4868-9afe-3d1e676852bc');
         console.log(users.data);
     } 
     allUsers();
