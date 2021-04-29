@@ -54,6 +54,7 @@ export async function getMessages(req: Request, res: Response, next: NextFunctio
     if( messages && messages?.length > 0 )
         for (const msg of messages) {
             let m: any = {
+                id:msg.id,
                 userId: msg.userId,
                 content: msg.content,
                 createdAt: msg.createdAt,

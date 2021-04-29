@@ -26,7 +26,7 @@ export class Post{
     }
 
     postMessage = async (roomId: number, body: any, token: string) => {
-        return await instance.post('/users/' + roomId + '/messages/', body, { headers: {'Authorization': 'Bearer ' + token}})
+        return await instance.post('/rooms/' + roomId + '/messages/', body, { headers: {'Authorization': 'Bearer ' + token}})
     }
 
     postRoom = async (body: any, token: string) => {
@@ -60,7 +60,6 @@ export class Get{
 }
 
 export class Delete{
-
     deleteMessage = async (roomId: number, messageId: number, token: string) => {
         return await instance.delete('/rooms/' + roomId + '/messages/' + messageId, { headers: {'Authorization': 'Bearer ' + token}});
     }
