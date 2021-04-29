@@ -51,7 +51,7 @@ const ChatRoomScreenComponent = (props: Props) => {
     }, [])
     
     useEffect(() => {
-        console.log(messages);
+        console.log(client.get.getMessages());
     }, [messages])
 
     const onSend = useCallback((messages = []) => {
