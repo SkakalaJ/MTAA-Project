@@ -49,7 +49,8 @@ const CreateRoomScreenComponent = (props: Props) => {
             <Container>
                 <Header>
                     <Left>
-                        <Button transparent>
+                        <Button transparent
+                        onPress={() => props.navigation.navigate('Rooms')}>
                             <Icon name='arrow-back' />
                         </Button>
                     </Left>

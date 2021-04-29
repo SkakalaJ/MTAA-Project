@@ -49,7 +49,8 @@ const ProfileScreenComponent = (props: Props) => {
             <Container>
                 <Header>
                     <Left>
-                        <Button transparent>
+                        <Button transparent
+                        onPress={() => props.navigation.navigate('Chat')}>
                             <Icon name='arrow-back' />
                         </Button>
                     </Left>
@@ -72,6 +73,7 @@ const ProfileScreenComponent = (props: Props) => {
                                </Text>
 
                                <Button block 
+                                onPress={() => props.navigation.navigate('ChangePassword')}
                                 style={{ marginBottom: 10, marginTop:30 }}
                                 >
                                     <Text> Change password </Text>

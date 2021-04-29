@@ -48,7 +48,8 @@ const RoomScreenComponent = (props: Props) => {
             <Container>
                 <Header>
                     <Left>
-                        <Button transparent>
+                        <Button transparent
+                        onPress={() => props.navigation.navigate('Profile')}>
                             <Icon name='person' />
                         </Button>
                     </Left>
@@ -56,7 +57,8 @@ const RoomScreenComponent = (props: Props) => {
                         <Title>App</Title>
                     </Body>
                     <Right>
-                        <Button transparent>
+                        <Button transparent
+                        onPress={() => props.navigation.navigate('CreateRoom')}>
                             <Icon name='add-circle-outline' style={{ fontSize:30 }} />
                         </Button>
                     </Right>
@@ -86,11 +88,13 @@ const RoomScreenComponent = (props: Props) => {
                 </Content>
                 <Footer>
                     <FooterTab>
-                        <Button vertical>
+                        <Button vertical
+                        onPress={() => props.navigation.navigate('Chat')}>
                             <Icon name="chatbubble" />
                             <Text>Chat</Text>
                         </Button>
-                        <Button vertical>
+                        <Button vertical
+                        onPress={() => props.navigation.navigate('Rooms')}>
                             <Icon name="chatbubbles" />
                             <Text>Rooms</Text>
                         </Button>
