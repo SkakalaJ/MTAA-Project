@@ -9,7 +9,7 @@ import {
   ViewStyle
 } from 'react-native';
 import { ThemeContext } from "./themeContext";
-import Colors from '../constants/colors';
+// import Colors from '../constants/colors';
 
 interface Props extends TextInputProps {
   width: number;
@@ -47,12 +47,12 @@ export default function TextIn({
     <View style={[style]}>
         <TextInput
           editable={disabled ? false : true}
-          placeholderTextColor={Colors.disabled}
+          placeholderTextColor={'#9AAABA'}
           {...props}
           style={[
             typography.label,
             styles.text,
-            { color: disabled ? Colors.disabled : Colors.text },
+            { color: disabled ? '#9AAABA' : '#000000' },
           ]}
         />
       {renderError()}
@@ -62,7 +62,7 @@ export default function TextIn({
 
 const styles = StyleSheet.create({
   error: {
-    color: Colors.orange,
+    color: '#F36E21',
     fontSize: 12,
     marginTop: 4,
   },

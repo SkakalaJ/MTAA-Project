@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
     KeyboardAvoidingView,
     Platform,
@@ -16,11 +16,12 @@ import { useComponentWidth } from '../../hooks/useWidth';
 
 import { NavParamList, StackNavProp } from '../../navigation/Navigator';
 import { IAppState } from '../../store';
-import Colors from '../../constants/colors';
+// import Colors from '../../constants/colors';
 import CustomButton from '../../view/Button';
 import TextIn from '../../view/TextInput';
 import { SpacedContainer } from '../Container';
 import { Formik, FormikProps } from 'formik';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const mapStateToProps = (state: IAppState) => {
@@ -40,6 +41,18 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 const ProfileScreenComponent = (props: Props) => {
     
     const [width, onLayout, ready] = useComponentWidth();
+    const [username, setUsers] = useState<string>('');
+
+    let userna: string = 'Username';
+    const getUsername = async () => {
+        userna = await AsyncStorage.getItem('username') || '';
+        setUsers(userna);
+    }
+
+    useEffect(() => {
+        getUsername();
+    }, [])
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -64,17 +77,16 @@ const ProfileScreenComponent = (props: Props) => {
                     <View style={{ paddingTop:100 }}>
                         <ListItem avatar>
                             <Body style={styles.middle}>
-                            
-                               
+
                                <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
                                
                                <Text style={{ paddingBottom:10, paddingTop:20 }}>
-                                    Username
+                                    {username}
                                </Text>
 
                                <Button block 
-                                onPress={() => props.navigation.navigate('ChangePassword')}
-                                style={{ marginBottom: 10, marginTop:30 }}
+                                    onPress={() => props.navigation.navigate('ChangePassword')}
+                                    style={{ marginBottom: 10, marginTop:30 }}
                                 >
                                     <Text> Change password </Text>
                                 </Button>

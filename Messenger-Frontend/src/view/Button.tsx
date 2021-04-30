@@ -9,7 +9,7 @@ import {
   ViewStyle
 } from "react-native";
 import { ThemeContext } from "./themeContext";
-import Colors from "../constants/colors";
+// import Colors from "../constants/colors";
 
 interface Props {
   width: number;
@@ -37,7 +37,7 @@ export default function CustomButton(props: Props) {
             styles.text,
             props.textStyle,
             !props.icon ? { textAlign: "center" } : undefined,
-            props.disabled ? { color: Colors.textFaded } : undefined,
+            props.disabled ? { color: '#9AAABA' } : undefined,
           ]}
         >
           {props.title}

@@ -16,7 +16,7 @@ import { useComponentWidth } from '../../hooks/useWidth';
 import { NavParamList, StackNavProp } from '../../navigation/Navigator';
 import { IAppState } from '../../store';
 import * as client from '../../api/client';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const mapStateToProps = (state: IAppState) => {
     return {
@@ -37,16 +37,32 @@ const ChatScreenComponent = (props: Props) => {
     const [width, onLayout, ready] = useComponentWidth();
     const [users, setUsers] = useState<any[]>([]);
 
+    let userna: string = 'Username';
+
     const getUsers = async () => {
-       
-        var pulledUsers = await client.get.getUsersAll('1ae84552-780c-4868-9afe-3d1e676852bc');
+        const token = await AsyncStorage.getItem('accessToken') || '';
+        userna = await AsyncStorage.getItem('username') || '';
+
+        var pulledUsers = await client.get.getUsersAll(token);
         console.log(pulledUsers.data.data.items);
         setUsers([...pulledUsers.data.data.items]);
+    }
+    const allUsers = async () => {
+        // var users = await client.get.getUsersAll('1ae84552-780c-4868-9afe-3d1e676852bc');
+        // console.log(users.data);
     } 
+
+    const clicked = (userId: any) => {
+        // props.navigation.navigate('ChatRoom', {roomId: 0});
+    }
 
     useEffect(() => {
         getUsers();
-    }, [users])
+    }, []);
+
+    useEffect(() => {
+        
+    }, [users]);
 
     return (
         <KeyboardAvoidingView
@@ -58,7 +74,7 @@ const ChatScreenComponent = (props: Props) => {
                 <Header>
                     <Left>
                         <Button transparent
-                        onPress={() => props.navigation.navigate('Profile')}>
+                        onPress={() => props.navigation.navigate('Profile', {username: userna})}>
                             <Icon name='person' />
                         </Button>
                     </Left>
@@ -74,9 +90,9 @@ const ChatScreenComponent = (props: Props) => {
                     style={styles.bottomBorder}
                     >
                         {users.map((user) => (
-                            <KeyboardAvoidingView style={styles.horizontalIcon} key="{user.username}">
+                            <KeyboardAvoidingView style={styles.horizontalIcon} key={user.id}>
                                 <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
-                            <Text note>{user.username}</Text>
+                                <Text note>{user.username}</Text>
                             </KeyboardAvoidingView> 
                         ))}
                         
@@ -86,7 +102,7 @@ const ChatScreenComponent = (props: Props) => {
                     <List>
                     
                     {users.map((user) => (
-                        <ListItem avatar key="{user.username}">
+                        <ListItem avatar key={user.id} onPress={() => clicked(user.id)}>
                             <Left style={styles.left}>
                                 <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
                             </Left>
@@ -132,8 +148,8 @@ const styles = StyleSheet.create({
     },
     right: {
         flex: 0.2,
-        paddingBottom:0,
-        border:'none'
+        paddingBottom:0
+        // border:'none'
     },
     horizontalIcon: {
         margin: 7,

@@ -269,7 +269,8 @@ export async function checkRegisterParams(req: Request): Promise<boolean>{
 
 export async function checkPasswdUpdateParams(req: Request): Promise<boolean>{
     if( req.body.password == null ||
-        req.body.userBid == null
+        req.body.userBid == null ||
+        req.body.newPassword == null
         )
             throw new Error(ERegisterError.Request);
     

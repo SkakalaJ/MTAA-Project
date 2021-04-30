@@ -1,9 +1,11 @@
-import Minio from 'minio';
+import { Client as MinioClient, BucketItemStat, BucketItem, ObjectCreatedAll, CopyConditions } from "minio";
 import { Readable } from "stream";
 import { makeTokenizer } from "@tokenizer/http";
 import FileType, { FileTypeResult } from "file-type";
 
-export const minioClient = new Minio.Client({
+
+
+export const client = new MinioClient({
     endPoint: 'localhost',
     port: 9000,
     useSSL: false,
@@ -18,10 +20,10 @@ export const minioClient = new Minio.Client({
 // }
 
 export async function upload(bucket: string, name: string, data: string | Buffer | Readable): Promise<string> {
-    if (!await minioClient.bucketExists(bucket))
-        await minioClient.makeBucket(bucket, '');
+    if (!await client.bucketExists(bucket))
+        await client.makeBucket(bucket, '');
 
-    return await minioClient.putObject(bucket, name, data);
+    return await client.putObject(bucket, name, data);
 }
 
 // export async function stat(bucket: string, name: string): Promise<BucketItemStat> {
@@ -49,11 +51,11 @@ export async function upload(bucket: string, name: string, data: string | Buffer
 // }
 
 export async function getPresignedUploadUrl(bucket: string, name: string, expiresIn?: number): Promise<string> {
-    return await minioClient.presignedPutObject(bucket, name, expiresIn);
+    return await client.presignedPutObject(bucket, name, expiresIn);
 }
 
 export async function getPresignedDownloadUrl(bucket: string, name: string, expiresIn?: number): Promise<string> {
-    return await minioClient.presignedGetObject(bucket, name, expiresIn);
+    return await client.presignedGetObject(bucket, name, expiresIn);
 }
 
 // export async function getFileStream(bucket: string, name: string): Promise<Readable> {
@@ -61,7 +63,7 @@ export async function getPresignedDownloadUrl(bucket: string, name: string, expi
 // }
 
 export async function getFileType(bucket: string, name: string): Promise<FileTypeResult | undefined> {
-    const url = await minioClient.presignedGetObject(bucket, name, 3600);
+    const url = await client.presignedGetObject(bucket, name, 3600);
     const tokenizer = await makeTokenizer(url);
     return await FileType.fromTokenizer(tokenizer);
 }

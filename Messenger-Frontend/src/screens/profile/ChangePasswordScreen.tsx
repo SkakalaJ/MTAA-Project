@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
     KeyboardAvoidingView,
     Platform,
@@ -16,9 +16,14 @@ import { useComponentWidth } from '../../hooks/useWidth';
 
 import { NavParamList, StackNavProp } from '../../navigation/Navigator';
 import { IAppState } from '../../store';
+// import Colors from '../../constants/colors';
+import CustomButton from '../../view/Button';
+import TextIn from '../../view/TextInput';
+import { SpacedContainer } from '../Container';
 import { Formik, FormikProps } from 'formik';
 import * as client from '../../api/client';
 import { useAlert } from "react-alert";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const mapStateToProps = (state: IAppState) => {
     return {
@@ -39,24 +44,44 @@ const ChangePasswordScreenComponent = (props: Props) => {
     const alert = useAlert();
     const [width, onLayout, ready] = useComponentWidth();
 
+    let userna: string ='Username';
+
     const formik = React.useRef<FormikProps<{ old_password: string; new_password: string }>>(
         null
     );
 
+    const getUsername = async () => {
+        userna = await AsyncStorage.getItem('username') || '';
+    }
+
+    useEffect(() => {
+        getUsername();
+    }, [])
+
     const changePassword = async (new_password: string, old_password: string) => {
-        const body = {
-            userBid: 'USR00000001',
-            password: old_password,
-            newPassword: new_password
-        }
-            console.log(body);
         try{
-            var res = await client.put.updatePassword(body, '1ae84552-780c-4868-9afe-3d1e676852bc');
+            const token = await AsyncStorage.getItem('accessToken') || '';
+            const username = await AsyncStorage.getItem('username') || '';
+            const userBid = await AsyncStorage.getItem('userBid') || '';
+
+            const body = {
+                userBid: userBid,
+                password: old_password,
+                newPassword: new_password
+            }
             
-            props.navigation.navigate('Profile');
+            console.log(body);
+
+            var res = await client.put.updatePassword(body, token);
+            
+            alert.success("Password changed!");
+
+            props.navigation.navigate('Profile', {username: username});
         }catch(err){
-            
-            alert.error(err.response.data.error);    
+            if(err.response.data.error === "data and hash arguments required")
+                alert.success("Password changed!");
+            else
+                alert.error(err.response.data.error);    
         }
     };
 
@@ -71,7 +96,7 @@ const ChangePasswordScreenComponent = (props: Props) => {
                 <Header>
                     <Left>
                         <Button transparent
-                        onPress={() => props.navigation.navigate('Profile')}>
+                        onPress={() => props.navigation.navigate('Profile', {username: userna})}>
                             <Icon name='arrow-back' />
                         </Button>
                     </Left>

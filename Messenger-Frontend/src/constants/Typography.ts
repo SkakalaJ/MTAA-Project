@@ -1,5 +1,5 @@
 import { StyleProp, TextStyle } from 'react-native';
-import Colors from './colors';
+// import Colors from './colors';
 
 type Typography = {
   label: StyleProp<TextStyle>;
@@ -10,15 +10,15 @@ type Typography = {
 const typography: Typography = {
   label: {
     fontSize: 20,
-    color: Colors.text,
+    color: '#000000',
   },
   text: {
     fontSize: 16,
-    color: Colors.text,
+    color: '#000000',
   },
   title: {
     fontSize: 16,
-    color: Colors.textFaded,
+    color: '#9AAABA',
   },
 };
 

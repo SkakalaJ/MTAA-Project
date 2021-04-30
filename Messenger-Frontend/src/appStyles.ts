@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native';
-import Colors from './constants/colors';
+// import Colors from './constants/colors';
 
 export const appStyles = StyleSheet.create({
   safe: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: '#8F9AAA',
   },
 
   container: {
     flex: 1,
-    backgroundColor: Colors.lightBlue,
+    backgroundColor: '#A8D5E2',
     padding: 24
   },
 
@@ -22,7 +22,7 @@ export const appStyles = StyleSheet.create({
   },
 
   shadow: {
-    shadowColor: Colors.darkShadow,
+    shadowColor: '#D8DFE7',
     shadowOffset: {
       width: 8,
       height: 8,

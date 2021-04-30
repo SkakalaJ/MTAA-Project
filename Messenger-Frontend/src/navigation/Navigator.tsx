@@ -34,10 +34,14 @@ export type NavParamList = {
     MainMenuNavigator: { screen: string };
     Chat: undefined;
     Rooms: undefined;
-    CreateRoom: undefined;
-    Profile: undefined;
+    CreateRoom: undefined,
+    Profile: {
+        username: string | undefined
+    };
     ChangePassword: undefined;
-    ChatRoom: undefined;
+    ChatRoom: {
+        roomId: number
+    };
 
     // Login
     Welcome: undefined;
@@ -70,9 +74,9 @@ export function LoginNavigator() {
             <Stack.Screen name="Chat" component={ChatScreen}/>
             <Stack.Screen name="Rooms" component={RoomScreen}/>
             <Stack.Screen name="CreateRoom" component={CreateRoomScreen}/>
-            <Stack.Screen name="Profile" component={ProfileScreen}/>
+            <Stack.Screen name="Profile" component={ProfileScreen} initialParams={{username: 'Unknown'}}/>
             <Stack.Screen name="ChangePassword" component={ChangePasswordScreen}/>
-            <Stack.Screen name="ChatRoom" component={ChatRoomScreen}/>
+            <Stack.Screen name="ChatRoom" component={ChatRoomScreen} initialParams={{roomId: 0}}/>
         </Stack.Navigator>
     );
 }

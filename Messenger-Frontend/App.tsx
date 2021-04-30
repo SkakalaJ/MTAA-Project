@@ -12,7 +12,7 @@ import { RootNavigator } from './src/navigation/Navigator';
 import { IAppState } from './src/store';
 import { Dispatch } from 'redux';
 import { Provider } from 'react-redux';
-import Colors from './src/constants/colors';
+// import { Colors } from './src/constants/colors';
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
@@ -60,7 +60,7 @@ const App = (props: Props) => {
   return (
     <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...options}>
-          <StatusBar backgroundColor={Colors.background} barStyle="dark-content"/>
+          <StatusBar backgroundColor={'#ECF0F3'} barStyle="dark-content"/>
           <NavigationContainer>
             <RootNavigator />
           </NavigationContainer>

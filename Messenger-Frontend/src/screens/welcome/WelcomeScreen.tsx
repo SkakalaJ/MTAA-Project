@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import AsyncStorage from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
     Image,
     KeyboardAvoidingView,
@@ -14,22 +14,23 @@ import { appStyles } from '../../appStyles';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { useComponentWidth } from '../../hooks/useWidth';
-import { translate } from '../../i18n/Language';
 import { NavParamList, StackNavProp } from '../../navigation/Navigator';
 import { IAppState } from '../../store';
 // import { SessionActions } from '../../store/session/actions';
-import Colors from '../../constants/colors';
 import CustomButton from '../../view/Button';
 import TextIn from '../../view/TextInput';
 import { SpacedContainer } from '../Container';
 import { Formik, FormikProps } from 'formik';
 
-import IdleTimer from 'react-idle-timer';
 import * as client from '../../api/client';
-import { useAlert } from "react-alert";
-import { useIdleTimer } from 'react-idle-timer';
-import {useRoute} from '@react-navigation/native';
 import * as minio from '../../api/minio';
+import { useAlert } from "react-alert";
+// import { useIdleTimer } from 'react-idle-timer';
+import {useRoute} from '@react-navigation/native';
+import ReactFileReader from 'react-file-reader';
+import { Asset, useAssets } from 'expo-asset';
+
+import bufferImage from 'buffer-image';
 
 // import { loginSchema } from '../../utils/validationSchemas';
 
@@ -53,12 +54,23 @@ let intervalId: NodeJS.Timeout;
 const WelcomeScreenComponent = (props: Props) => {
     const alert = useAlert();
 
-
     const formik = React.useRef<FormikProps<{ email: string; password: string }>>(
         null
     );
     
-    
+    let userna: string = 'Username';
+
+    const test = async () => {
+        // const image = await bufferImage(Buffer.from("Hello World"));
+
+        // const [{ localUri }] = await Asset.loadAsync(require('../../assets/x_ray_baby.jpg'));
+        // const a = require('../../assets/x_ray_baby.jpg');
+        
+        // const img = raw('../../assets/x_ray_baby.jpg');
+        // await minio.upload('images','img.jpg', x_ray_baby);
+        // console.log(await minio.getPresignedDownloadUrl('images','img.jpg', 600000));
+    }
+
     const handleOnAction = () => {
         // minio.uploadFile();
         // getToken();
@@ -96,11 +108,13 @@ const WelcomeScreenComponent = (props: Props) => {
     }
 
     const getToken = async () => {
+        userna = await AsyncStorage.getItem('username') || '';
         const token = await AsyncStorage.getItem('accessToken') || '';
         checkSession();
     }
 
     useEffect(() => {
+        test();
         getToken();
     }, []);
 
@@ -117,8 +131,8 @@ const WelcomeScreenComponent = (props: Props) => {
         try{
             var res = await client.post.postLogin(loginBody);
             AsyncStorage.setItem('accessToken', res.data.data.accessToken);
-            AsyncStorage.setItem('userBid', res.data.data.accessToken);
-            AsyncStorage.setItem('username', res.data.data.accessToken);
+            AsyncStorage.setItem('userBid', res.data.data.userBid);
+            AsyncStorage.setItem('username', res.data.data.username);
             props.navigation.navigate('Chat');
 
             // console.log(res.data.data.accessToken);
@@ -134,13 +148,14 @@ const WelcomeScreenComponent = (props: Props) => {
         }
     };
     
-    const { getRemainingTime, getLastActiveTime, reset } = useIdleTimer({
-        timeout: 2000,
-        onIdle: handleOnIdle,
-        onActive: handleOnActive,
-        onAction: handleOnAction,
-        debounce: 100
-    })
+
+    // const { getRemainingTime, getLastActiveTime, reset } = useIdleTimer({
+    //     timeout: 2000,
+    //     onIdle: handleOnIdle,
+    //     onActive: handleOnActive,
+    //     onAction: handleOnAction,
+    //     debounce: 100
+    // })
 
     const [width, onLayout, ready] = useComponentWidth();
     return (
@@ -167,9 +182,8 @@ const WelcomeScreenComponent = (props: Props) => {
                         touched,
                         }) => (
                         <View>
-
                             <Item>
-                                <Input 
+                                <Input
                                     // error={errors.email && 'error username'}
                                     placeholder={'username'}
                                     // textContentType={'emailAddress'}
@@ -180,7 +194,7 @@ const WelcomeScreenComponent = (props: Props) => {
                                     // touched={touched.email}
                                     onBlur={handleBlur('email')}
                                     onChangeText={handleChange('email')}
-                                    />
+                                />
                             </Item>
                             <Item last>
                                 <Input placeholder={'password'}
@@ -228,7 +242,7 @@ const WelcomeScreenComponent = (props: Props) => {
                             <Text>Create Room</Text>
                         </Button>
                         <Button rounded warning
-                        onPress={() => props.navigation.navigate('Profile')}>
+                        onPress={() => props.navigation.navigate('Profile', {username: userna})}>
                             <Text>Profile</Text>
                         </Button>
                         <Button rounded warning
@@ -236,12 +250,10 @@ const WelcomeScreenComponent = (props: Props) => {
                             <Text>Change password</Text>
                         </Button>
                         <Button rounded warning
-                        onPress={() => props.navigation.navigate('ChatRoom')}>
+                        onPress={() => props.navigation.navigate('ChatRoom', {roomId: 1})}>
                             <Text>Chat room</Text>
                         </Button>
                     </View>
-                    
-                    
                 </Content>
             </Container>
 

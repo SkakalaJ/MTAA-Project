@@ -16,7 +16,7 @@ import { useComponentWidth } from '../../hooks/useWidth';
 
 import { NavParamList, StackNavProp } from '../../navigation/Navigator';
 import { IAppState } from '../../store';
-import Colors from '../../constants/colors';
+// import Colors from '../../constants/colors';
 import CustomButton from '../../view/Button';
 import TextIn from '../../view/TextInput';
 import { SpacedContainer } from '../Container';
