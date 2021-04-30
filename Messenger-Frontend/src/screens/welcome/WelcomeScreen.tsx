@@ -225,7 +225,7 @@ const WelcomeScreenComponent = (props: Props) => {
                         <Text> Register </Text>
                     </Button>
                     
-                    <View>
+                    {/* <View>
                         <Text>
                             Ukazky screenov:
                         </Text>
@@ -253,7 +253,7 @@ const WelcomeScreenComponent = (props: Props) => {
                         onPress={() => props.navigation.navigate('ChatRoom', {roomId: 1})}>
                             <Text>Chat room</Text>
                         </Button>
-                    </View>
+                    </View> */}
                 </Content>
             </Container>
 
