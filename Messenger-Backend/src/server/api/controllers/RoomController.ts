@@ -55,6 +55,7 @@ export async function createRoom(req: Request, res: Response, next: NextFunction
     }
 
     let data: any = {
+        id: room.id,
         name: room.name,
         createdAt: room.createdAt,
         avatar: room.avatar
@@ -110,6 +111,7 @@ export async function updateRoom(req: Request, res: Response, next: NextFunction
     }
 
     let data: any = {
+        id: room.id,
         name: room.name,
         createdAt: room.createdAt,
         avatar: room.avatar

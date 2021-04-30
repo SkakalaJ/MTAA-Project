@@ -120,7 +120,7 @@ export async function getById(userId: number): Promise<User | null> {
             id: userId,
             deletedAt: null
         },
-        attributes: ['bid', 'username', 'verified','avatar', 'createdAt']
+        attributes: ['id','bid', 'username', 'verified','avatar', 'createdAt']
     });
 }
 
@@ -159,12 +159,16 @@ export async function getByIdWithRoomId(userId: number, roomId: number): Promise
     });
 }
 
-export async function getAllWithRoomId(): Promise<User[] | null> {
-    return await User.findAll({ 
-        where: { deletedAt: null },
+export async function getAllUserRooms(userId: number): Promise<User | null> {
+    return await User.findOne({ 
+        where: { id: userId, deletedAt: null },
         include: [{
             model: Room,
-            as: 'rooms'
+            as: 'rooms',
+            include: [{
+                model: User,
+                as: 'users',
+            }]
         }],
     });
 }

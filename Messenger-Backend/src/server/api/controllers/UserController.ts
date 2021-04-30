@@ -90,6 +90,7 @@ export async function getUser(req: Request, res: Response, next: NextFunction): 
     }
 
     let data: any = {
+        id: user.id,
         bid: user.bid,
         createdAt: user.createdAt,
         username: user.username,
@@ -356,75 +357,66 @@ function validateEmailFormat(email: string){
 
 export async function getUserWithRooms(req: Request, res: Response): Promise<any>{
 
-    // let responseObj: TAnyResponse = {
-    //     data: null,
-    //     error: null,
-    // };
+    console.log("GET ROOMS FOR USER");
 
-    // let token;
-    // try{
-    //     token = await checkAuthHeader(req);
-    // }catch(err){
-    //     responseObj.error = err.message;
-    //     return res.status(401).send(responseObj);
-    // }
+    let responseObj: TAnyResponse = {
+        data: null,
+        error: null,
+    };
 
-    // let session:Session | null;
-    // try{
-    //     session = await SessionModel.getByToken(token);
-    //     if(!session)
-    //         throw new Error(EMessageError.Permission);
+    let token;
+    try{
+        token = await checkAuthHeader(req);
+    }catch(err){
+        responseObj.error = err.message;
+        return res.status(401).send(responseObj);
+    }
 
-    // }catch(err){
-    //     responseObj.error = err.message;
-    //     return res.status(401).send(responseObj);
-    // }
+    let session:Session | null;
+    try{
+        session = await SessionModel.getByToken(token);
+        if(!session)
+            throw new Error(EMessageError.Permission);
 
-    // const user = await UserModel.getByIdWithRoomId(session.userId, Number(roomId));
+    }catch(err){
+        responseObj.error = err.message;
+        return res.status(401).send(responseObj);
+    }
 
-    // if(!user){
-    //     responseObj.error = EMessageError.Permission;
-    //     return res.status(401).send(responseObj);
-    // }
+    const user = await UserModel.getAllUserRooms(session.userId);
 
-    // const messages = await MessageModel.findForRoomOffset(Number(offset), 30, Number(roomId));
+    let rms = [];
+    if( user && user.rooms && user.rooms?.length > 0 )
+        for (const room of user.rooms) {
+            let r: any = {
+                id: room.id,
+                name: room.name,
+                createdAt: room.createdAt,
+                avatar: room.avatar,
+                users: []
+            }
 
-    // let msgs = [];
-    // if( messages && messages?.length > 0 )
-    //     for (const msg of messages) {
-    //         let m: any = {
-    //             id:msg.id,
-    //             userId: msg.userId,
-    //             content: msg.content,
-    //             createdAt: msg.createdAt,
-    //             medium: msg.medium,
-    //             medias: []
-    //         }
+            for (const user of room.users) {
+                r.users.push({
+                    id: user.id,
+                    bid: user.bid,
+                    createdAt: user.createdAt,
+                    username: user.username,
+                    verified: user.verified,
+                    avatar: user.avatar
+                });
+            }
 
-    //         if(m.medium === true){
-    //             for (const medium of msg.medias) {
-    //                 m.medias.push({id: medium.id, name: medium.name, fileName: medium.fileName, type: medium.type, format: medium.format, url: medium.url });
-    //             }
-    //         }
-    //         else{
-    //             m.medias = null;
-    //         }
+            rms.push(r);
+        }
 
-    //         msgs.push(m);
-    //     }
+    let data: any = {
+        itemCount: rms.length,
+        items: rms
+    }
 
-    // let data: any = {
-    //     roomId: Number(roomId),
-    //     itemCount: msgs.length,
-    //     items: msgs
-    // }
-
-    // responseObj.data = data;
-    // return res.status(200).send(responseObj);
-
-    // const user = await getUserFromSession(req, res);
-
-    // return UserModel.getById(user.id);
+    responseObj.data = data;
+    return res.status(200).send(responseObj);
 }
 
 async function getUserFromSession(req: Request, res: Response): Promise<any>{
@@ -486,6 +478,7 @@ export async function getAllUsers(req: Request, res: Response): Promise<any>{
     if( users && users?.length > 0 )
         for (const usr of users) {
             let u: any = {
+                id: usr.id,
                 bid: usr.bid,
                 createdAt: usr.createdAt,
                 username: usr.username,
