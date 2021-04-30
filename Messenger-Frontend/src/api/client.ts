@@ -57,6 +57,10 @@ export class Get{
         return await instance.get('/users', { headers: {'Authorization': 'Bearer ' + token}});
     }
 
+    getRoomsAll = async (token: string) => {
+        return await instance.get('/users/rooms', { headers: {'Authorization': 'Bearer ' + token}});
+    }
+
     getMessages = async (roomId: number, query: any, token: string) => {
         return await instance.get('/rooms/' + roomId + '/messages/', { params: query, headers: {'Authorization': 'Bearer ' + token} });
     }
