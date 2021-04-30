@@ -54,6 +54,7 @@ const ChatScreenComponent = (props: Props) => {
 
     const clicked = (userId: any) => {
         // props.navigation.navigate('ChatRoom', {roomId: 0});
+        props.navigation.navigate('ChatRoom', {roomId: 1});
     }
 
     useEffect(() => {
