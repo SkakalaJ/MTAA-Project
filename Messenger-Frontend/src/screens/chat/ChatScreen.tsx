@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{ useState, useCallback, useEffect } from 'react';
 import {
     KeyboardAvoidingView,
     Platform,
@@ -35,12 +35,18 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 const ChatScreenComponent = (props: Props) => {
 
     const [width, onLayout, ready] = useComponentWidth();
+    const [users, setUsers] = useState<any[]>([]);
 
-    const allUsers = async () => {
-        var users = await client.get.getUsersAll('1ae84552-780c-4868-9afe-3d1e676852bc');
-        console.log(users.data);
+    const getUsers = async () => {
+       
+        var pulledUsers = await client.get.getUsersAll('1ae84552-780c-4868-9afe-3d1e676852bc');
+        console.log(pulledUsers.data.data.items);
+        setUsers([...pulledUsers.data.data.items]);
     } 
-    allUsers();
+
+    useEffect(() => {
+        getUsers();
+    }, [users])
 
     return (
         <KeyboardAvoidingView
@@ -67,47 +73,33 @@ const ChatScreenComponent = (props: Props) => {
                     horizontal={true}
                     style={styles.bottomBorder}
                     >
-                        <KeyboardAvoidingView style={styles.horizontalIcon}>
-                            <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
-                            <Text note>Meno</Text>
-                        </KeyboardAvoidingView>
-                        <KeyboardAvoidingView style={styles.horizontalIcon}>
-                            <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
-                            <Text note>Meno</Text>
-                        </KeyboardAvoidingView>
-                        <KeyboardAvoidingView style={styles.horizontalIcon}>
-                            <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
-                            <Text note>Meno</Text>
-                        </KeyboardAvoidingView>
+                        {users.map((user) => (
+                            <KeyboardAvoidingView style={styles.horizontalIcon} key="{user.username}">
+                                <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
+                            <Text note>{user.username}</Text>
+                            </KeyboardAvoidingView> 
+                        ))}
                         
                     </ScrollView>
                 </KeyboardAvoidingView>
                 <Content>
                     <List>
-                        <ListItem avatar>
+                    
+                    {users.map((user) => (
+                        <ListItem avatar key="{user.username}">
                             <Left style={styles.left}>
                                 <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
                             </Left>
                             <Body style={styles.middle}>
-                                <Text>Juraj</Text>
-                                <Text note>what's up? . .</Text>
+                                <Text>{user.username}</Text>
+                                <Text note></Text>
                             </Body>
                             <Right style={styles.right}>
                                 <Text note>3:43 pm</Text>
                             </Right>
                         </ListItem>
-                        <ListItem avatar>
-                            <Left style={styles.left}>
-                                <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
-                            </Left>
-                            <Body style={styles.middle}>
-                                <Text>Juraj</Text>
-                                <Text note>what's up? . .</Text>
-                            </Body>
-                            <Right style={styles.right}>
-                                <Text note>3:43 pm</Text>
-                            </Right>
-                        </ListItem>
+                    ))}
+
                     </List>
                 </Content>
                 <Footer>

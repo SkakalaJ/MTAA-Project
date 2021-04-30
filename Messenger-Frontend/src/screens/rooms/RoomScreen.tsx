@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     KeyboardAvoidingView,
     Platform,
@@ -15,11 +15,7 @@ import { useComponentWidth } from '../../hooks/useWidth';
 
 import { NavParamList, StackNavProp } from '../../navigation/Navigator';
 import { IAppState } from '../../store';
-import Colors from '../../constants/colors';
-import CustomButton from '../../view/Button';
-import TextIn from '../../view/TextInput';
-import { SpacedContainer } from '../Container';
-import { Formik, FormikProps } from 'formik';
+import * as client from '../../api/client';
 
 
 const mapStateToProps = (state: IAppState) => {
@@ -39,6 +35,18 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 const RoomScreenComponent = (props: Props) => {
     
     const [width, onLayout, ready] = useComponentWidth();
+    const [rooms, setRooms] = useState<any[]>([]);
+
+    const getRooms = async () => {
+       
+        var pulledRooms = await client.get.getRoomsAll('1ae84552-780c-4868-9afe-3d1e676852bc');
+        setRooms([...pulledRooms.data.data.items]);
+    } 
+
+    useEffect(() => {
+        getRooms();
+    }, [rooms]);
+
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -66,24 +74,19 @@ const RoomScreenComponent = (props: Props) => {
              
                 <Content>
                     <List>
-                        <ListItem avatar>
+
+                    {rooms.map((room) => (
+                        <ListItem avatar key="{room.id}">
                             <Left style={styles.left}>
                                 <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
                             </Left>
                             <Body style={styles.middle}>
-                                <Text>Room 1</Text>
+                                <Text>{room.name}</Text>
                             </Body>
                           
                         </ListItem>
-                        <ListItem avatar>
-                            <Left style={styles.left}>
-                                <Thumbnail source={{ uri: 'https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png' }} />
-                            </Left>
-                            <Body style={styles.middle}>
-                                <Text>Room 2</Text>
-                            </Body>
-                           
-                        </ListItem>
+                    ))}
+                        
                     </List>
                 </Content>
                 <Footer>
